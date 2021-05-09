@@ -14,6 +14,10 @@
     <meta
             content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
             name="viewport">
+    <meta name="Revisit-After" content="5 Days">
+    <meta name="Distribution" content="Global">
+    <meta name="Habour" content="Habour">
+    <meta name="TheHabour" content="TheHabour">
     <!-- Bootstrap 3.3.6 -->
     <link rel="stylesheet" href="${contextPath}/resources/bootstrap/css/bootstrap.min.css">
     <!-- Font Awesome -->
@@ -31,11 +35,14 @@
     <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
     <link href="${contextPath}/resources/css/common.css" rel="stylesheet">
     <link rel="stylesheet" href="${contextPath}/resources/dist/css/skins/skin-blue.min.css">
+
     <link
             href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
             rel="stylesheet"
             integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
             crossorigin="anonymous" />
+    <!-- Custom style -->
+    <link href="${contextPath}/resources/css/common.css" rel="stylesheet">
     <style type="text/css">
         .asteriskField {
             color: red;
@@ -49,7 +56,7 @@
 
         <!-- Logo -->
         <a href="/welcome" class="logo"> <!-- mini logo for sidebar mini 50x50 pixels -->
-            <span class="logo-mini"><b>D</b>T</span> <!-- logo for regular state and mobile devices -->
+            <span class="logo-mini"><b>T</b>H</span> <!-- logo for regular state and mobile devices -->
             <span class="logo-lg"><b>The Habour</b> Restaurant</span>
         </a>
 
@@ -270,24 +277,24 @@
                     <tbody>
                     <tr>
                         <td colspan="1"><img alt="this is logo"
-                                             src="https://foody364.files.wordpress.com/2016/10/wallpaper-food-drink-cocktail-cake-pasta-pizza-awesome-85.jpg?w=1200" style="width: 30%;margin-left: 30%; display: block;">
-                            <h2>Item Category </h2> <spring:url value="/save/catalogue"
-                                                            var="saveURL" />
+                                             src="${contextPath}/resources/dist/img/background.jpg" style="width: 30%;margin-left: 30%; display: block;">
+                            <h2> Background </h2> <spring:url value="/save/background"
+                                                                var="saveURL" />
                             <fieldset>
-                                <form:form modelAttribute="catalogue" method="POST"
-                                           action="${saveURL}" cssClass="well form-horizontal" >
+                                <form:form modelAttribute="background" method="POST" onsubmit="return validatePhoto()"
+                                           action="${saveURL}" cssClass="well form-horizontal" enctype="multipart/form-data">
 
                                     <div class="form-group" style="display: none">
                                         <label class="control-label col-sm-2 requiredField">
                                             ID  <span class="asteriskField"> * </span>
                                         </label>
                                         <c:choose>
-                                            <c:when test="${not empty catalogue.idCatalogue }">
+                                            <c:when test="${not empty background.id }">
                                                 <div class="col-md-8 inputGroupContainer">
                                                     <div class="input-group">
 																<span class="input-group-addon"><i
                                                                         class="glyphicon glyphicon-user"></i></span>
-                                                        <form:input path="idCatalogue" cssClass="form-control"
+                                                        <form:input path="id" cssClass="form-control"
                                                                     required="required" readonly="true" />
                                                     </div>
                                                 </div>
@@ -297,7 +304,7 @@
                                                     <div class="input-group">
 																<span class="input-group-addon"><i
                                                                         class="glyphicon glyphicon-user"></i></span>
-                                                        <form:input id="id" path="idCatalogue"
+                                                        <form:input id="id" path="id"
                                                                     cssClass="form-control" readonly="true" />
                                                     </div>
                                                 </div>
@@ -307,36 +314,98 @@
 
                                     <div class="form-group">
                                         <label class="control-label col-sm-2 requiredField">
-                                            Tên Category <span class="asteriskField"> *</span>
+                                            Welcome <span class="asteriskField"> *</span>
                                         </label>
                                         <div class="col-md-8 inputGroupContainer">
                                             <div class="input-group">
                                                     <span class="input-group-addon"><i
                                                             class="glyphicon glyphicon-list-alt"></i></span>
-                                                <form:input path="ten" id="ten"
-                                                            placeholder="nhập tên catagory" class="form-control"
+                                                <form:input path="tieudeWelcome" id="tieudeWelcome"
+                                                            placeholder="Nhập Câu Welcome đầu trang " class="form-control"
                                                             required="true" type="text" require="true"></form:input>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label col-sm-2 requiredField">
-                                            Mô tả Catelogy <span class="asteriskField"> *</span>
+                                            Sologan <span class="asteriskField"> *</span>
                                         </label>
                                         <div class="col-md-8 inputGroupContainer">
                                             <div class="input-group">
-														<span class="input-group-addon"><i
-                                                                class="glyphicon glyphicon-list-alt"></i></span>
-                                                <form:textarea path="chitiet"
-                                                               placeholder="nhập mô tả catalogue" class="form-control" rows="3"
-                                                               required="true" type="text" require="true"></form:textarea>
+                                                    <span class="input-group-addon"><i
+                                                            class="glyphicon glyphicon-list-alt"></i></span>
+                                                <form:input path="sologanHabour" id="sologanHabour"
+                                                            placeholder="Nhập Câu Slogan đầu trang. Ví Dụ: TO-GO · The Habour Cocktail-Lounge " class="form-control"
+                                                            required="true" type="text" require="true"></form:input>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2 requiredField">
+                                            Logo <span class="asteriskField"> *</span>
+                                        </label>
+                                        <div class="input-group">
+                                            <div class="custom-file">
+                                                <form:input path="logo" type="file" class="custom-file-input" id="logoImage" require="true" cssStyle="margin-left: 16px" accept="image/png,image/jpeg"/>
+                                            </div>
+<%--                                            <p>--%>
+<%--                                                <img id="logoImageShow" alt="ảnh xem trước của logo">--%>
+<%--                                            </p>--%>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2 requiredField">
+                                            ảnh chính đầu trang <span class="asteriskField"> *</span>
+                                        </label>
+                                        <div class="input-group">
+                                            <div class="custom-file">
+                                                <form:input path="mainPhoto" type="file" class="custom-file-input" id="imageFile" require="true" cssStyle="margin-left: 16px"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2 requiredField">
+                                            ảnh cuối trang <span class="asteriskField"> *</span>
+                                        </label>
+                                        <div class="input-group">
+                                            <div class="custom-file">
+                                                <form:input path="footerPhoto" type="file" class="custom-file-input" id="footerPhoto" require="true" cssStyle="margin-left: 16px"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2 requiredField">
+                                            title cảm ơn <span class="asteriskField"> *</span>
+                                        </label>
+                                        <div class="col-md-8 inputGroupContainer">
+                                            <div class="input-group">
+                                                    <span class="input-group-addon"><i
+                                                            class="glyphicon glyphicon-list-alt"></i></span>
+                                                <form:input path="tieuDeCauCamOn" id="tieuDeCauCamOn"
+                                                            placeholder="Nhập Câu title cảm ơn cuối trang. Ví Dụ: Thank You For Your Visiting " class="form-control"
+                                                            required="true" type="text" require="true"></form:input>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2 requiredField">
+                                            nội dung cảm ơn <span class="asteriskField"> *</span>
+                                        </label>
+                                        <div class="col-md-8 inputGroupContainer">
+                                            <div class="input-group">
+                                                    <span class="input-group-addon"><i
+                                                            class="glyphicon glyphicon-list-alt"></i></span>
+                                                <form:input path="noiDungCauCamOn" id="noiDungCauCamOn"
+                                                            placeholder="Nhập nội dung cảm ơn cuối trang. Ví Dụ: Hope to see you again " class="form-control"
+                                                            required="true" type="text" require="true"></form:input>
                                             </div>
                                         </div>
                                     </div>
 
+
                                     <div class="text-center">
                                         <button type="submit" class="btn btn-primary">Save</button>
-                                        <a type="button" class="btn btn-primary" href="/catalogue"
+                                        <a type="button" class="btn btn-primary" href="/background"
                                            onclick="return confirm('Bạn chắc chắn muốn ngừng thực hiện tác vụ không ?')">Cancel</a>
                                     </div>
 
@@ -426,4 +495,33 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 </body>
+<script type="text/javascript">
+    // $(document).ready(function () {
+    //   $('logoImage').change(function () {
+    //         showLogoImage(this);
+    //   });
+    // });
+    //
+    // function showLogoImage(fileInput){
+    //     file = fileInput.files[0];
+    //     reader = new FileReader();
+    //
+    //     reader.onload = function(e){
+    //         $('logoImageShow').attr('src',e.target.result);
+    //     };
+    //     reader.readAsDataURL(file);
+    // };
+
+    function validatePhoto() {
+        var logo = document.getElementById("logoImage");
+        var main = document.getElementById("mainPhoto");
+        var footer = document.getElementById("footerPhoto");
+        if (logo.files.length == 0 || main.files.length || footer.files.length){
+            alert("Hãy chọn đẩy đủ 3 ảnh cho background !");
+            return false;
+        }else{
+            return true;
+        }
+    }
+</script>
 </html>

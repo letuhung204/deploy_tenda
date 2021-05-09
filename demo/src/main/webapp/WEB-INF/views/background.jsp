@@ -22,12 +22,8 @@
     <!-- Ionicons -->
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
-    <!-- Theme style -->
     <link rel="stylesheet" href="${contextPath}/resources/dist/css/AdminLTE.min.css">
-    <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
-            page. However, you can choose any other skin. Make sure you
-            apply the skin class to the body tag so the changes take effect.
-      -->
+
     <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
     <link href="${contextPath}/resources/css/common.css" rel="stylesheet">
     <link rel="stylesheet" href="${contextPath}/resources/dist/css/skins/skin-blue.min.css">
@@ -36,9 +32,24 @@
             rel="stylesheet"
             integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
             crossorigin="anonymous" />
+    <!-- Custom style -->
     <style type="text/css">
-        .asteriskField {
-            color: red;
+        .img-circle{
+            margin-left: 15px;
+        }
+    </style>
+    <style>
+        @font-face {
+            font-family: "Resamitz";
+            src: url("${contextPath}/resources/fonts/Resamitz.otf") format("opentype");
+        }
+        @font-face {
+            font-family: "Catorze 27 Medium";
+            src: url("${contextPath}/resources/fonts/Catorze27Medium.otf") format("opentype");
+        }
+        @font-face {
+            font-family: "Catorze 27 Black";
+            src: url("${contextPath}/resources/fonts/Catorze27Style1-Black.otf") format("opentype");
         }
     </style>
 <body class="hold-transition skin-blue sidebar-mini">
@@ -50,7 +61,7 @@
         <!-- Logo -->
         <a href="/welcome" class="logo"> <!-- mini logo for sidebar mini 50x50 pixels -->
             <span class="logo-mini"><b>D</b>T</span> <!-- logo for regular state and mobile devices -->
-            <span class="logo-lg"><b>The Habour</b> Restaurant</span>
+            <span class="logo-lg"><b>Habour</b> Restaurant</span>
         </a>
 
         <!-- Header Navbar -->
@@ -236,13 +247,14 @@
 
             <!-- Sidebar Menu -->
             <ul class="sidebar-menu">
+                <li class="header">Menu Management</li>
                 <li class="active"><a class="" href="/background"><i
                         class="glyphicon glyphicon-home"></i> <span>Quản Lý Background</span></a></li>
                 <li class="active"><a href="/catalogue"><i
                         class="glyphicon glyphicon-lock"></i> <span>Quản Lý Category Của Menu
 								</span></a></li>
                 <li class="active"><a class="" href="/menu/list"><i
-                        class="glyphicon glyphicon-home"></i> <span>Quản Lý Menu
+                        class="glyphicon glyphicon-th-list"></i> <span>Quản Lý Menu
 								</span></a></li>
             </ul>
             <!-- /.sidebar-menu -->
@@ -262,94 +274,63 @@
                 <li class="active">Here</li>
             </ol>
         </section>
-
-        <!-- Main content -->
+        <%--        main content--%>
         <section class="content">
-            <div class="container">
-                <table class="table table-striped">
-                    <tbody>
-                    <tr>
-                        <td colspan="1"><img alt="this is logo"
-                                             src="https://foody364.files.wordpress.com/2016/10/wallpaper-food-drink-cocktail-cake-pasta-pizza-awesome-85.jpg?w=1200" style="width: 30%;margin-left: 30%; display: block;">
-                            <h2>Item Category </h2> <spring:url value="/save/catalogue"
-                                                            var="saveURL" />
-                            <fieldset>
-                                <form:form modelAttribute="catalogue" method="POST"
-                                           action="${saveURL}" cssClass="well form-horizontal" >
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">Data Table Menu</h3>
+                        </div>
 
-                                    <div class="form-group" style="display: none">
-                                        <label class="control-label col-sm-2 requiredField">
-                                            ID  <span class="asteriskField"> * </span>
-                                        </label>
-                                        <c:choose>
-                                            <c:when test="${not empty catalogue.idCatalogue }">
-                                                <div class="col-md-8 inputGroupContainer">
-                                                    <div class="input-group">
-																<span class="input-group-addon"><i
-                                                                        class="glyphicon glyphicon-user"></i></span>
-                                                        <form:input path="idCatalogue" cssClass="form-control"
-                                                                    required="required" readonly="true" />
-                                                    </div>
-                                                </div>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <div class="col-md-8 inputGroupContainer">
-                                                    <div class="input-group">
-																<span class="input-group-addon"><i
-                                                                        class="glyphicon glyphicon-user"></i></span>
-                                                        <form:input id="id" path="idCatalogue"
-                                                                    cssClass="form-control" readonly="true" />
-                                                    </div>
-                                                </div>
-                                            </c:otherwise>
-                                        </c:choose>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label class="control-label col-sm-2 requiredField">
-                                            Tên Category <span class="asteriskField"> *</span>
-                                        </label>
-                                        <div class="col-md-8 inputGroupContainer">
-                                            <div class="input-group">
-                                                    <span class="input-group-addon"><i
-                                                            class="glyphicon glyphicon-list-alt"></i></span>
-                                                <form:input path="ten" id="ten"
-                                                            placeholder="nhập tên catagory" class="form-control"
-                                                            required="true" type="text" require="true"></form:input>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <table id="example1" class="table table-bordered table-striped">
+                                <thead>
+                                <tr>
+                                    <th>welcome đầu trang</th>
+                                    <th>slogan đầu trang</th>
+                                    <th>logo</th>
+                                    <th>ảnh chính đầu trang</th>
+                                    <th>ảnh cuối trang</th>
+                                    <th>tiêu đề cảm ơn cuối trang</th>
+                                    <th>nội dung cảm ơn</th>
+                                    <th>chỉnh sửa</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <c:forEach items="${background}" var="background" varStatus="s">
+                                    <tr>
+                                        <td><c:out value="${background.tieudeWelcome}" /></td>
+                                        <td><c:out value="${background.sologanHabour}" /></td>
+                                        <td style="background-color: black"><img src="/user-photos/${background.logo}" alt="logo" width="150px" height="120px"></td>
+                                        <td><img src="/user-photos/${background.mainPhoto}" class="img-circle" alt="main photo" width="150px" height="120px"></td>
+                                        <td><img src="/user-photos/${background.footerPhoto}" class="img-circle" alt="footer photo" width="150px" height="120px"></td>
+                                        <td><c:out value="${background.tieuDeCauCamOn}" /></td>
+                                        <td><c:out value="${background.noiDungCauCamOn}" /></td>
+                                        <td>
+                                            <div style="margin-left: 5px;width: 40%;float: left;">
+                                                <spring:url
+                                                        value="/background/${background.id}/edit" var="editURL" />
+                                                <a href="${editURL}" style="font-size: 25px;"><i
+                                                        class="glyphicon glyphicon-pencil"></i></a>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label col-sm-2 requiredField">
-                                            Mô tả Catelogy <span class="asteriskField"> *</span>
-                                        </label>
-                                        <div class="col-md-8 inputGroupContainer">
-                                            <div class="input-group">
-														<span class="input-group-addon"><i
-                                                                class="glyphicon glyphicon-list-alt"></i></span>
-                                                <form:textarea path="chitiet"
-                                                               placeholder="nhập mô tả catalogue" class="form-control" rows="3"
-                                                               required="true" type="text" require="true"></form:textarea>
-                                            </div>
-                                        </div>
-                                    </div>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                                </tbody>
+                            </table>
 
-                                    <div class="text-center">
-                                        <button type="submit" class="btn btn-primary">Save</button>
-                                        <a type="button" class="btn btn-primary" href="/catalogue"
-                                           onclick="return confirm('Bạn chắc chắn muốn ngừng thực hiện tác vụ không ?')">Cancel</a>
-                                    </div>
-
-                                </form:form>
-                            </fieldset></td>
-                    </tr>
-                    </tbody>
-                </table>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                </div>
             </div>
         </section>
 
 
         <!-- /.content -->
+
     </div>
     <!-- /.content-wrapper -->
 
@@ -377,10 +358,33 @@
             <!-- Home tab content -->
             <div class="tab-pane active" id="control-sidebar-home-tab">
                 <h3 class="control-sidebar-heading">Recent Activity</h3>
+                <ul class="control-sidebar-menu">
+                    <li><a href="javascript::;"> <i
+                            class="menu-icon fa fa-birthday-cake bg-red"></i>
+
+                        <div class="menu-info">
+                            <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
+
+                            <p>Will be 23 on April 24th</p>
+                        </div>
+                    </a></li>
+                </ul>
                 <!-- /.control-sidebar-menu -->
 
                 <h3 class="control-sidebar-heading">Tasks Progress</h3>
+                <ul class="control-sidebar-menu">
+                    <li><a href="javascript::;">
+                        <h4 class="control-sidebar-subheading">
+                            Custom Template Design <span
+                                class="label label-danger pull-right">70%</span>
+                        </h4>
 
+                        <div class="progress progress-xxs">
+                            <div class="progress-bar progress-bar-danger"
+                                 style="width: 70%"></div>
+                        </div>
+                    </a></li>
+                </ul>
                 <!-- /.control-sidebar-menu -->
 
             </div>
@@ -413,17 +417,19 @@
     <div class="control-sidebar-bg"></div>
 </div>
 <!-- ./wrapper -->
-<script>
 
-</script>
 <!-- REQUIRED JS SCRIPTS -->
+
 <!-- jQuery 2.2.0 -->
 <script src="${contextPath}/resources/plugins/jQuery/jQuery-2.2.0.min.js"></script>
 <!-- Bootstrap 3.3.6 -->
 <script src="${contextPath}/resources/bootstrap/js/bootstrap.min.js"></script>
 <!-- AdminLTE App -->
 <script src="${contextPath}/resources/dist/js/app.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
+<!-- Optionally, you can add Slimscroll and FastClick plugins.
+ Both of these plugins are recommended to enhance the
+ user experience. Slimscroll is required when using the
+ fixed layout. -->
 </body>
 </html>

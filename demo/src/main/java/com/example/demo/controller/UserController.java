@@ -1,66 +1,66 @@
 package com.example.demo.controller;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ByteArrayResource;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
+import java.nio.file.Path;
+import org.springframework.http.MediaType;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import java.io.File;
+import java.io.IOException;
+import com.example.demo.validator.PhotoUploadUtil;
+import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.view.RedirectView;
-
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import com.example.demo.model.Background;
+import java.util.Iterator;
+import java.util.List;
 import com.example.demo.model.CatagoryMenu;
-import com.example.demo.model.Catalogue;
 import com.example.demo.model.Menu;
+import java.util.ArrayList;
+import com.example.demo.model.Catalogue;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.validation.Errors;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.GetMapping;
 import com.example.demo.model.User;
+import org.springframework.ui.Model;
+import com.example.demo.repo.BackgroundRepo;
 import com.example.demo.repo.CategoryMenuRepo;
 import com.example.demo.repo.CategoryRepo;
 import com.example.demo.repo.MenuRepository;
-import com.example.demo.service.SecurityService;
-import com.example.demo.service.UserService;
-import com.example.demo.validator.PhotoUploadUtil;
 import com.example.demo.validator.UserValidator;
+import com.example.demo.service.SecurityService;
+import org.springframework.beans.factory.annotation.Autowired;
+import com.example.demo.service.UserService;
+import org.springframework.stereotype.Controller;
 
 @Controller
-public class UserController {
+public class UserController
+{
     @Autowired
     private UserService userService;
-
     @Autowired
     private SecurityService securityService;
-
     @Autowired
     private UserValidator userValidator;
-
     @Autowired
     private MenuRepository menuRepo;
     @Autowired
     private CategoryRepo categoryRepo;
-
     @Autowired
     private CategoryMenuRepo categoryMenuRepo;
-
+    @Autowired
+    private BackgroundRepo backgroundRepo;
     public static String uploadDirectory = System.getProperty("user.dir") + "/user-photos";
 
     @GetMapping("/registration")
     public String registration(Model model) {
         model.addAttribute("userForm", new User());
-
         return "registration";
     }
 
@@ -71,12 +71,9 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             return "registration";
         }
-
         userService.save(userForm);
-
         securityService.autoLogin(userForm.getUsername(), userForm.getPasswordConfirm());
-
-        return "home";
+        return "/admin";
     }
 
     @GetMapping("/login")
@@ -117,20 +114,20 @@ public class UserController {
             }
             catalogue.setMenuList(listMenu);
         }
-
-        model.addAttribute("listCatalogues",listCatalogues);
-//        model.addAttribute("listMenu", listMenu);
+         List<Background> backgroundList = backgroundRepo.findAll();
+        if (backgroundList.size() != 0) {
+            model.addAttribute("background", backgroundList.get(0));
+        }
+        model.addAttribute("listCatalogues", listCatalogues);
         return "home";
     }
 
     @PostMapping("/save/menu")
     public RedirectView saveMenu(@RequestParam("photos") MultipartFile multipartFile, @RequestParam("title") String title,@RequestParam(value = "id",required = false) Integer id,
                                  @RequestParam("description") String description, @RequestParam("idCatalogue") int catelogueId,@RequestParam(value = "price",required = false) String price) throws IOException {
-    	System.out.println("Test 0");
     	String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
         Menu menu ;
         CatagoryMenu catagoryMenu;
-        System.out.println("Test 1");
         if(id == null){
             catagoryMenu = new CatagoryMenu();
             menu = new Menu();
@@ -142,21 +139,16 @@ public class UserController {
             menu = menuRepo.getOne(id);
             catagoryMenu = categoryMenuRepo.itemCategory(id);
         }
-        System.out.println("Test 2");
         menu.setTitle(title);
         menu.setDescription(description);
         menu.setPhotos(fileName);
         menu.setPrice(price);
-
         catagoryMenu.setIdCatagory(catelogueId);
         menuRepo.save(menu);
         categoryMenuRepo.save(catagoryMenu);
 
         String uploadDir = "user-photos/";
-        System.out.println("Test 3");
         PhotoUploadUtil.savePhoto(uploadDir, fileName, multipartFile);
-        System.out.println("Test 4");
-
         return new RedirectView("/menu/list", true);
     }
 
@@ -169,6 +161,8 @@ public class UserController {
         }
         menu.setCatalogueList(catalogueList);
         model.addAttribute("menu", menu);
+         File photo = new File("/user-photos/" + menu.getPhotos());
+        model.addAttribute("photos", photo);
         return "menuForm";
     }
 
@@ -231,7 +225,9 @@ public class UserController {
                 menu.setIdCatalogue(catalogue.getIdCatalogue());
             }
             menu.setCatalogueList(catalogueList);
-            model.addAttribute("menu",menu);
+            model.addAttribute("menu", menu);
+             File photo = new File("/user-photos/" + menu.getPhotos());
+            model.addAttribute("photos", photo);
         }
         return "menuForm";
     }

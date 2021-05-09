@@ -31,15 +31,13 @@
     <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
     <link href="${contextPath}/resources/css/common.css" rel="stylesheet">
     <link rel="stylesheet" href="${contextPath}/resources/dist/css/skins/skin-blue.min.css">
-    <link href="../static/images/logo.png" href="@{/images/logo.png}"
-          rel="shortcut icon" />
     <link
             href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
             rel="stylesheet"
             integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
             crossorigin="anonymous" />
     <!-- Custom style -->
-    <link href="../static/css/style.css" href="@{/css/style.css}"
+    <link href="../static/css/style.css"
           rel="stylesheet" />
     <script src="/js/checkValidate.js"></script>
     <style type="text/css">
@@ -56,7 +54,7 @@
         <!-- Logo -->
         <a href="/welcome" class="logo"> <!-- mini logo for sidebar mini 50x50 pixels -->
             <span class="logo-mini"><b>D</b>T</span> <!-- logo for regular state and mobile devices -->
-            <span class="logo-lg"><b>Dante</b> Restaurant</span>
+            <span class="logo-lg"><b>Habour</b> Restaurant</span>
         </a>
 
         <!-- Header Navbar -->
@@ -242,21 +240,14 @@
 
             <!-- Sidebar Menu -->
             <ul class="sidebar-menu">
-                <li class="header">Menu Management</li>
-                <!-- Optionally, you can add icons to the links -->
+                <li class="active"><a class="" href="/background"><i
+                        class="glyphicon glyphicon-home"></i> <span>Quản Lý Background</span></a></li>
                 <li class="active"><a href="/catalogue"><i
-                        class="glyphicon glyphicon-lock"></i> <span>Category
-								Management</span></a></li>
+                        class="glyphicon glyphicon-lock"></i> <span>Quản Lý Category Của Menu
+								</span></a></li>
                 <li class="active"><a class="" href="/menu/list"><i
-                        class="glyphicon glyphicon-home"></i> <span>Menu
-								Management</span></a></li>
-                <li class="active"><a class="" href="#"><i
-                        class="glyphicon glyphicon-info-sign"></i> <span>Introduce
-								About Web</span></a></li>
-
-                <li class="active"><a class="" href="#"><i
-                        class="glyphicon glyphicon-question-sign"></i> <span>Help
-								Us !</span></a></li>
+                        class="glyphicon glyphicon-home"></i> <span>Quản Lý Menu
+								</span></a></li>
             </ul>
             <!-- /.sidebar-menu -->
         </section>
@@ -268,11 +259,11 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Admin System: <small>Dante Restaurant</small>
+                Admin System: <small>Habour Restaurant</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-                <li class="active">Dante</li>
+                <li class="active">Habour</li>
             </ol>
         </section>
         <!-- Main content -->
@@ -291,9 +282,9 @@
     <!-- Main Footer -->
     <footer class="main-footer">
         <!-- To the right -->
-        <div class="pull-right hidden-xs">Dante </div>
+        <div class="pull-right hidden-xs">Habour </div>
         <!-- Default to the left -->
-        <strong>Admin <a href="#">Dante
+        <strong>Admin <a href="#">Habour
             Restaurant</a>
         </strong>
     </footer>
