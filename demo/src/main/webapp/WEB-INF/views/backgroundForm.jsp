@@ -496,22 +496,6 @@
 
 </body>
 <script type="text/javascript">
-    // $(document).ready(function () {
-    //   $('logoImage').change(function () {
-    //         showLogoImage(this);
-    //   });
-    // });
-    //
-    // function showLogoImage(fileInput){
-    //     file = fileInput.files[0];
-    //     reader = new FileReader();
-    //
-    //     reader.onload = function(e){
-    //         $('logoImageShow').attr('src',e.target.result);
-    //     };
-    //     reader.readAsDataURL(file);
-    // };
-
     function validatePhoto() {
         var logo = document.getElementById("logoImage");
         var main = document.getElementById("mainPhoto");

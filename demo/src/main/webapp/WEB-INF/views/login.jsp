@@ -125,7 +125,7 @@
          .login-container-img {
              flex: 50%;
              font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-             background: url("../resources/imgs/bg/test.jpg");
+             background: url("../resources/imgs/bg/_MG_9796.jpg");
              background-size: cover;
              border-top-left-radius: 15px;
              border-bottom-left-radius: 15px;

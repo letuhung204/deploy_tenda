@@ -166,14 +166,11 @@
             <form:form method="POST" action="${contextPath}/registration" modelAttribute="userForm" class="login-form">
                 <h1>The Habour Registration</h1>
                 <spring:bind path="username">
-                    <c:if test="${validateUser == null}">
-                        <label><c:out value="${validateUser}" /></label>
-                    </c:if>
                     <p class="field ${status.error ? 'has-error' : ''}">
                         <label>User Name</label>
                         <form:input type="text" path="username" placeholder="Username"
                                     autofocus="true"></form:input>
-                        <form:errors path="username"></form:errors>
+                        <form:errors path="username" cssStyle="color: red"></form:errors>
                     </p>
                 </spring:bind>
 
@@ -181,7 +178,7 @@
                     <p class="field ${status.error ? 'has-error' : ''}">
                         <label>Password</label>
                         <form:input type="password" path="password" placeholder="Enter PassWord"></form:input>
-                        <form:errors path="password"></form:errors>
+                        <form:errors path="password" cssStyle="color: red"></form:errors>
                     </p>
                 </spring:bind>
                 <spring:bind path="passwordConfirm">
@@ -189,7 +186,7 @@
                         <label>Confirm Password</label>
                         <form:input type="password" path="passwordConfirm"
                                     placeholder="Confirm your password"></form:input>
-                        <form:errors path="passwordConfirm"></form:errors>
+                        <form:errors path="passwordConfirm" cssStyle="color: red"></form:errors>
                     </p>
                 </spring:bind>
 
