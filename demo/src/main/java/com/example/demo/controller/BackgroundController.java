@@ -41,24 +41,40 @@ public class BackgroundController {
     }
 
     @PostMapping({"/save/background"})
-    public RedirectView save(@RequestParam("id")  Integer id, @RequestParam("tieudeWelcome")  String tieudeWelcome, @RequestParam("sologanHabour")  String sologanHabour, @RequestParam("logo")  MultipartFile logo, @RequestParam("mainPhoto")  MultipartFile mainPhoto, @RequestParam("footerPhoto")  MultipartFile footerPhoto, @RequestParam("tieuDeCauCamOn")  String tieuDeCauCamOn, @RequestParam("noiDungCauCamOn")  String noiDungCauCamOn) throws IOException {
-         String logoName = StringUtils.cleanPath(logo.getOriginalFilename());
+    public RedirectView save(@RequestParam("id")  Integer id, @RequestParam("tieudeWelcome")  String tieudeWelcome, @RequestParam("sologanHabour")  String sologanHabour
+            , @RequestParam(value = "logo",required = false)  MultipartFile logo, @RequestParam(value = "mainPhoto",required = false)  MultipartFile mainPhoto
+            , @RequestParam(value = "footerPhoto",required = false)  MultipartFile footerPhoto, @RequestParam("tieuDeCauCamOn")  String tieuDeCauCamOn
+            , @RequestParam("noiDungCauCamOn")  String noiDungCauCamOn) throws IOException {
          String photoMain = StringUtils.cleanPath(mainPhoto.getOriginalFilename());
          String photoFooter = StringUtils.cleanPath(footerPhoto.getOriginalFilename());
          Background background =  backgroundRepo.getOne(id);
-        background.setFooterPhoto(photoFooter);
-        background.setLogo(logoName);
-        background.setMainPhoto(photoMain);
         background.setNoiDungCauCamOn(noiDungCauCamOn);
         background.setSologanHabour(sologanHabour);
         background.setTieuDeCauCamOn(tieuDeCauCamOn);
         background.setTieudeWelcome(tieudeWelcome);
 
+        String uploadDir = "user-photos/";
+        String originNameFile = logo.getOriginalFilename();
+        if( originNameFile != null && !originNameFile.equals("")){
+            String logoName = StringUtils.cleanPath(originNameFile);
+            background.setLogo(logoName);
+            PhotoUploadUtil.savePhoto(uploadDir, logoName, logo);
+        }
+
+        String originNameMainPhoto = mainPhoto.getOriginalFilename();
+        if( originNameMainPhoto != null && !originNameMainPhoto.equals("")){
+            String mainPhotoName = StringUtils.cleanPath(originNameMainPhoto);
+            background.setMainPhoto(mainPhotoName);
+            PhotoUploadUtil.savePhoto(uploadDir, mainPhotoName, mainPhoto);
+        }
+        String originNameFooter = footerPhoto.getOriginalFilename();
+        if( originNameFooter != null && !originNameFooter.equals("")){
+            String footerName = StringUtils.cleanPath(originNameFooter);
+            background.setFooterPhoto(footerName);
+            PhotoUploadUtil.savePhoto(uploadDir, footerName, footerPhoto);
+        }
+
         backgroundRepo.save(background);
-         String uploadDir = "user-photos/";
-        PhotoUploadUtil.savePhoto(uploadDir, logoName, logo);
-        PhotoUploadUtil.savePhoto(uploadDir, photoMain, mainPhoto);
-        PhotoUploadUtil.savePhoto(uploadDir, photoFooter, footerPhoto);
         return new RedirectView("/background", true);
     }
 

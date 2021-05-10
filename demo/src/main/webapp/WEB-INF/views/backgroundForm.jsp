@@ -346,11 +346,14 @@
                                         </label>
                                         <div class="input-group">
                                             <div class="custom-file">
-                                                <form:input path="logo" type="file" class="custom-file-input" id="logoImage" require="true" cssStyle="margin-left: 16px" accept="image/png,image/jpeg"/>
+                                                <input name="logo" type="file" class="custom-file-input" require="true" style="margin-left: 16px" onchange="readURL(this);"/>
+                                                <c:if test="${background.logo != null}">
+                                                    <img src="/user-photos/${background.logo}" width="150px" height="100px" style="margin-left: 16px; margin-top: 5px;" id="imageShowLogo">
+                                                </c:if>
                                             </div>
-<%--                                            <p>--%>
-<%--                                                <img id="logoImageShow" alt="ảnh xem trước của logo">--%>
-<%--                                            </p>--%>
+                                            <p style="margin-left: 16px;margin-top: 5px" id="plogoImageShow" class="hidden">
+                                                <img id="logoImageShow" alt="ảnh xem trước của logo">
+                                            </p>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -359,7 +362,15 @@
                                         </label>
                                         <div class="input-group">
                                             <div class="custom-file">
-                                                <form:input path="mainPhoto" type="file" class="custom-file-input" id="imageFile" require="true" cssStyle="margin-left: 16px"/>
+                                                <div class="custom-file">
+                                                    <input name="mainPhoto" type="file" class="custom-file-input" require="true" style="margin-left: 16px" onchange="readURL(this);"/>
+                                                    <c:if test="${background.mainPhoto != null}">
+                                                        <img src="/user-photos/${background.mainPhoto}" width="150px" height="100px" style="margin-left: 16px; margin-top: 5px;" id="imageShowMainPhoto">
+                                                    </c:if>
+                                                </div>
+                                                <p style="margin-left: 16px;margin-top: 5px" id="pMainPhotoImageShow" class="hidden">
+                                                    <img id="mainPhotoImageShow" alt="ảnh xem trước của logo">
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
@@ -369,7 +380,15 @@
                                         </label>
                                         <div class="input-group">
                                             <div class="custom-file">
-                                                <form:input path="footerPhoto" type="file" class="custom-file-input" id="footerPhoto" require="true" cssStyle="margin-left: 16px"/>
+                                                <div class="custom-file">
+                                                    <input name="footerPhoto" type="file" class="custom-file-input" require="true" style="margin-left: 16px" onchange="readURL(this);"/>
+                                                    <c:if test="${background.footerPhoto != null}">
+                                                        <img src="/user-photos/${background.footerPhoto}" width="150px" height="100px" style="margin-left: 16px; margin-top: 5px;" id="imageShowFooterPhoto">
+                                                    </c:if>
+                                                </div>
+                                                <p style="margin-left: 16px;margin-top: 5px" id="pFooterPhotoImageShow" class="hidden">
+                                                    <img id="footerPhotoImageShow" alt="ảnh xem trước của logo">
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
@@ -506,6 +525,46 @@
         }else{
             return true;
         }
+    }
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+           if(input.name == 'logo'){
+               document.getElementById("plogoImageShow").classList.remove('hidden');
+               document.getElementById("imageShowLogo").classList.add('hidden');
+               reader.onload = function (e) {
+                   $('#logoImageShow')
+                       .attr('src', e.target.result)
+                       .width(150)
+                       .height(100);
+               };
+           }
+            if(input.name == 'mainPhoto'){
+                document.getElementById("pMainPhotoImageShow").classList.remove('hidden');
+                document.getElementById("imageShowMainPhoto").classList.add('hidden');
+                reader.onload = function (e) {
+                    $('#mainPhotoImageShow')
+                        .attr('src', e.target.result)
+                        .width(150)
+                        .height(100);
+                };
+            }
+            if(input.name == 'footerPhoto'){
+                reader.onload = function (e) {
+                    document.getElementById("pFooterPhotoImageShow").classList.remove('hidden');
+                    document.getElementById("imageShowFooterPhoto").classList.add('hidden');
+                    $('#footerPhotoImageShow')
+                        .attr('src', e.target.result)
+                        .width(150)
+                        .height(100);
+                };
+            }
+
+
+            reader.readAsDataURL(input.files[0]);
+        }
+
     }
 </script>
 </html>

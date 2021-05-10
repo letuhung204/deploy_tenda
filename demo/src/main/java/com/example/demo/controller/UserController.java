@@ -123,11 +123,12 @@ public class UserController
     }
 
     @PostMapping("/save/menu")
-    public RedirectView saveMenu(@RequestParam("photos") MultipartFile multipartFile, @RequestParam("title") String title,@RequestParam(value = "id",required = false) Integer id,
+    public RedirectView saveMenu(@RequestParam(value = "photos",required = false) MultipartFile multipartFile, @RequestParam("title") String title,@RequestParam(value = "id",required = false) Integer id,
                                  @RequestParam("description") String description, @RequestParam("idCatalogue") int catelogueId,@RequestParam(value = "price",required = false) String price) throws IOException {
-    	String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+
         Menu menu ;
         CatagoryMenu catagoryMenu;
+        String fileName;
         if(id == null){
             catagoryMenu = new CatagoryMenu();
             menu = new Menu();
@@ -139,16 +140,22 @@ public class UserController
             menu = menuRepo.getOne(id);
             catagoryMenu = categoryMenuRepo.itemCategory(id);
         }
+
         menu.setTitle(title);
         menu.setDescription(description);
-        menu.setPhotos(fileName);
         menu.setPrice(price);
         catagoryMenu.setIdCatagory(catelogueId);
-        menuRepo.save(menu);
-        categoryMenuRepo.save(catagoryMenu);
 
-        String uploadDir = "user-photos/";
-        PhotoUploadUtil.savePhoto(uploadDir, fileName, multipartFile);
+        categoryMenuRepo.save(catagoryMenu);
+        String originNameFile = multipartFile.getOriginalFilename();
+
+        if( originNameFile != null && !originNameFile.equals("")){
+            fileName = StringUtils.cleanPath(originNameFile);
+            menu.setPhotos(fileName);
+            String uploadDir = "user-photos/";
+            PhotoUploadUtil.savePhoto(uploadDir, fileName, multipartFile);
+        }
+        menuRepo.save(menu);
         return new RedirectView("/menu/list", true);
     }
 
@@ -161,8 +168,6 @@ public class UserController
         }
         menu.setCatalogueList(catalogueList);
         model.addAttribute("menu", menu);
-         File photo = new File("/user-photos/" + menu.getPhotos());
-        model.addAttribute("photos", photo);
         return "menuForm";
     }
 
@@ -186,22 +191,6 @@ public class UserController
         return "menuList";
     }
 
-    @GetMapping("getImage/{photo}")
-    @ResponseBody
-    public ResponseEntity<ByteArrayResource> getImage(@PathVariable("photo") String photo) {
-        if (!photo.equals("") || photo != null) {
-            try {
-                Path fileName = Paths.get("user-photos", photo);
-                byte[] buffer = Files.readAllBytes(fileName);
-                ByteArrayResource byteArrayResource = new ByteArrayResource(buffer);
-                return ResponseEntity.ok().contentLength(buffer.length).contentType(MediaType.parseMediaType("image/png"))
-                        .body(byteArrayResource);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return ResponseEntity.badRequest().build();
-    }
 
     @GetMapping(value = "menu/delete/{menuId}")
     public RedirectView deleteMenuById(@PathVariable("menuId") Integer menuId){
@@ -226,8 +215,6 @@ public class UserController
             }
             menu.setCatalogueList(catalogueList);
             model.addAttribute("menu", menu);
-             File photo = new File("/user-photos/" + menu.getPhotos());
-            model.addAttribute("photos", photo);
         }
         return "menuForm";
     }

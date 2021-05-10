@@ -397,7 +397,13 @@
                                         </label>
                                         <div class="input-group">
                                             <div class="custom-file">
-                                                <form:input path="photos" type="file" class="custom-file-input" id="imageFile" require="true" cssStyle="margin-left: 16px"/>
+                                                <input name="photos" type="file" class="custom-file-input" require="true" style="margin-left: 16px" onchange="readURL(this)"/>
+                                                <c:if test="${menu.photos != null}">
+                                                    <img src="/user-photos/${menu.photos}" width="150px" height="100px" style="margin-left: 16px;margin-top: 5px" id="imageShow">
+                                                </c:if>
+                                                <p style="margin-left: 16px;margin-top: 5px" id="plogoImageShow" class="hidden">
+                                                    <img id="logoImageShow" alt="ảnh xem trước của logo">
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
@@ -486,13 +492,33 @@
 </script>
 <!-- REQUIRED JS SCRIPTS -->
 <script>
+    function readURL(input) {
+        document.getElementById("plogoImageShow").classList.remove('hidden');
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#logoImageShow')
+                    .attr('src', e.target.result)
+                    .width(150)
+                    .height(100);
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+        document.getElementById("imageShow").classList.add('hidden');
+    }
     function validateImage() {
         var image = document.getElementById("imageFile");
-        if (image.files.length == 0){
-            alert("Bạn chưa chọn ảnh cho item !");
-            return false;
-        }else{
-            return true;
+        var imageShow = document.getElementById("imageShow");
+
+        if(null == imageShow){
+            if (image.files.length == 0){
+                alert("Bạn chưa chọn ảnh cho item !");
+                return false;
+            }else{
+                return true;
+            }
         }
     }
 </script>
