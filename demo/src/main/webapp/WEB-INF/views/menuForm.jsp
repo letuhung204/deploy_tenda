@@ -256,7 +256,7 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Admin System: <small>Habour Restaurant</small>
+                The Habour Restaurant
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
@@ -349,7 +349,7 @@
                                             <div class="input-group">
                                                     <span class="input-group-addon"><i
                                                             class="glyphicon glyphicon-list-alt"></i></span>
-                                                <form:select path="idCatalogue" class="form-control"
+                                                <form:select path="idCategory" class="form-control"
                                                              id="sel1" style="height:30px" required="required">
                                                     <form:option value="" label="--- Select ---" />
                                                     <c:forEach items="${menu.catalogueList}" var="catalogue" varStatus="s">

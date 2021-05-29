@@ -22,6 +22,16 @@ public class Menu {
     private String price;
     @Transient
     private String[] mota;
+    @Column
+    private Integer idCategory;
+
+    public Integer getIdCategory() {
+        return idCategory;
+    }
+
+    public void setIdCategory(Integer idCategory) {
+        this.idCategory = idCategory;
+    }
 
     public String[] getMota() {
         return mota;
@@ -41,16 +51,6 @@ public class Menu {
 
     @Transient
     private List<Catalogue> catalogueList;
-    @Transient
-    private Integer idCatalogue;
-
-    public Integer getIdCatalogue() {
-        return idCatalogue;
-    }
-
-    public void setIdCatalogue(Integer idCatalogue) {
-        this.idCatalogue = idCatalogue;
-    }
 
     public List<Catalogue> getCatalogueList() {
         return catalogueList;

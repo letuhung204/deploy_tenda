@@ -274,20 +274,21 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Admin System: <small>Habour Restaurant</small>
+                Habour Restaurant
             </h1>
             <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-                <li class="active">Here</li>
+                <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+                <li class="active">Category</li>
             </ol>
         </section>
         <%--        main content--%>
         <section class="content">
+
             <div class="row">
                 <div class="col-xs-12">
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Data Table Menu</h3>
+                            <h3 class="box-title">Bảng Dữ Liệu Category </h3>
                         </div>
                         <div class="box-header">
                             <spring:url value="/catalogue/form" var="addURL" />
@@ -306,7 +307,22 @@
                                 </tr>
                                 </thead>
                                 <tbody>
+                                <c:if test="${not empty Notification}">
+                                    <div class="callout callout-warning lead">
+                                        <h4>${Notification}</h4>
+                                        <h4 style="color: #8b1414">Note: Load lại trang để ẩn thông báo !</h4>
+                                    </div>
+                                </c:if>
+
                                 <c:forEach items="${listCategory}" var="category" varStatus="s">
+                                    <c:if test="${not empty Notification}">
+                                        <c:if test="${id_category == category.idCatalogue}">
+                                            <spring:url value="/delete/continue?idCatalogue=${category.idCatalogue}" var="deleteURL" />
+                                            <button type="button" class="btn btn-danger" style="margin-bottom: 20px;"><a href="${deleteURL}" style="font-size: 20px;color: white;text-decoration: none;"
+                                                       onclick="return confirm('Thao tác này sẽ xóa category và xóa mọi Menu Item thuộc category : ${category.ten}.Bạn Có thực sự muốn xóa ?');">Vẫn Thực Hiện Xóa <c:out value="${category.ten}" /></a></button>
+                                        </c:if>
+
+                                    </c:if>
                                     <tr>
                                         <td><c:out value="${s.index + 1}" /></td>
                                         <td><c:out value="${category.ten}" /></td>

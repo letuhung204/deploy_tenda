@@ -267,7 +267,7 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Admin System: <small>Habour Restaurant</small>
+                The Habour Restaurant
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
@@ -280,7 +280,7 @@
                 <div class="col-xs-12">
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Data Table Menu</h3>
+                            <h3 class="box-title">Bảng dữ liệu Background</h3>
                         </div>
 
                         <!-- /.box-header -->

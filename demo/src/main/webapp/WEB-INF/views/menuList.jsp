@@ -273,7 +273,7 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Admin System: <small>Habour Restaurant</small>
+                The Habour Restaurant
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
@@ -286,13 +286,14 @@
                 <div class="col-xs-12">
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Data Table Menu</h3>
+                            <h3 class="box-title">Bản dữ liệu Menu</h3>
                         </div>
                         <div class="box-header">
                             <spring:url value="/save" var="addURL" />
                             <a class="btn btn-primary" href="${addURL}" role="button"><i
                                     class="glyphicon glyphicon-plus"></i> Thêm Món ăn</a>
                         </div>
+
                         <!-- /.box-header -->
                         <div class="box-body">
                             <table id="example1" class="table table-bordered table-striped">

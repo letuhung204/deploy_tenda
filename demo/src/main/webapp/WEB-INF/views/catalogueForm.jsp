@@ -255,7 +255,7 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Admin System: <small>Habour Restaurant</small>
+                The Habour Restaurant
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
