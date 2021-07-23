@@ -1,6 +1,8 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.NguyenLieu;
 import com.example.demo.model.NhaCungCap;
+import com.example.demo.repo.NguyenLieuRepo;
 import com.example.demo.repo.NhaCungCapRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +18,8 @@ public class NhaCungCapController {
 
     @Autowired
     private NhaCungCapRepo nhaCungCapRepo;
+    @Autowired
+    private NguyenLieuRepo nguyenLieuRepo;
 
         @GetMapping("/nhacungcap")
     public String nhaCungCap(Model model){
@@ -65,6 +69,7 @@ public class NhaCungCapController {
         NhaCungCap nhaCungCap = nhaCungCapRepo.getOne(id);
         if(nhaCungCap !=null){
             nhaCungCapRepo.delete(nhaCungCap);
+            nguyenLieuRepo.deleteNguyenLieuByNhaCC(id);
         }
         return new RedirectView("/nhacungcap",true);
     }
