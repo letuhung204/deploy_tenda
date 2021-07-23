@@ -23,7 +23,7 @@
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Theme style -->
-    <link rel="stylesheet" href="../../resources/dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="${contextPath}/resources/dist/css/AdminLTE.min.css">
     <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
             page. However, you can choose any other skin. Make sure you
             apply the skin class to the body tag so the changes take effect.
@@ -39,12 +39,27 @@
             integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
             crossorigin="anonymous" />
     <!-- Custom style -->
-    <link href="../static/css/style.css" href="@{/css/style.css}"
-          rel="stylesheet" />
-    <script src="/js/checkValidate.js"></script>
+    <link  rel="stylesheet" href="../static/css/style.css"/>
     <style type="text/css">
         .asteriskField {
             color: red;
+        }
+        .img-circle{
+            margin-left: 15px;
+        }
+    </style>
+    <style>
+        @font-face {
+            font-family: "Resamitz";
+            src: url("${contextPath}/resources/fonts/Resamitz.otf") format("opentype");
+        }
+        @font-face {
+            font-family: "Catorze 27 Medium";
+            src: url("${contextPath}/resources/fonts/Catorze27Medium.otf") format("opentype");
+        }
+        @font-face {
+            font-family: "Catorze 27 Black";
+            src: url("${contextPath}/resources/fonts/Catorze27Style1-Black.otf") format("opentype");
         }
     </style>
 <body class="hold-transition skin-blue sidebar-mini">
@@ -242,13 +257,24 @@
 
             <!-- Sidebar Menu -->
             <ul class="sidebar-menu">
-                <li class="header">Nhập Nguyên Liệu</li>
+                <li class="header">Menu Management</li>
                 <!-- Optionally, you can add icons to the links -->
+                <%--                <li class="active"><a href="/menu/list"><i--%>
+                <%--                        class="glyphicon glyphicon-lock"></i> <span>Account--%>
+                <%--								Management</span></a></li>--%>
                 <li class="active"><a href="/catalogue"><i
-                        class="glyphicon glyphicon-lock"></i> <span>Nhập Nguyên Liệu</span></a></li>
+                        class="glyphicon glyphicon-lock"></i> <span>Category
+								Management</span></a></li>
                 <li class="active"><a class="" href="/menu/list"><i
                         class="glyphicon glyphicon-home"></i> <span>Menu
 								Management</span></a></li>
+                <li class="active"><a class="" href="#"><i
+                        class="glyphicon glyphicon-info-sign"></i> <span>Introduce
+								About Web</span></a></li>
+
+                <li class="active"><a class="" href="#"><i
+                        class="glyphicon glyphicon-question-sign"></i> <span>Help
+								Us !</span></a></li>
             </ul>
             <!-- /.sidebar-menu -->
         </section>
@@ -264,14 +290,68 @@
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-                <li class="active">Dante</li>
+                <li class="active">Here</li>
             </ol>
         </section>
-        <!-- Main content -->
+        <%--        main content--%>
         <section class="content">
-            <img alt="this is logo"
-                 src="https://images.getbento.com/accounts/e8eee6aef7c2e8242e267a82a199ac35/media/images/57814S_Freihon_190703_0114_A.jpg?fit=max&w=1800&auto=format,compress"
-                 style="width: 100%;">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">Data Table Menu</h3>
+                        </div>
+                        <div class="box-header">
+                            <spring:url value="/catalogue/form" var="addURL" />
+                            <a class="btn btn-primary" href="${addURL}" role="button"><i
+                                    class="glyphicon glyphicon-plus"></i> Thêm Nhà Cung Cấp</a>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <table id="example1" class="table table-bordered table-striped">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Tên Nhà Cung Cấp</th>
+                                    <th>Địa Chỉ</th>
+                                    <th>Số Điện Thoại</th>
+                                    <th>Fax</th>
+                                    <th>Email</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <c:forEach items="${nhaCungCapList}" var="nhaCungCap" varStatus="s">
+                                    <tr>
+                                        <td><c:out value="${s.index + 1}" /></td>
+                                        <td><c:out value="${nhaCungCap.tenNhaCungCap}" /></td>
+                                        <td><c:out value="${nhaCungCap.email}" /></td>
+                                        <td><c:out value="${nhaCungCap.soDienThoai}" /></td>
+                                        <td><c:out value="${nhaCungCap.fax}" /></td>
+                                        <td><c:out value="${nhaCungCap.diaChi}" /></td>
+                                        <td>
+                                            <div style="margin-left: 5px;width: 40%;float: left;">
+                                                <spring:url
+                                                        value="/catagory/${nhaCungCap.id}/edit" var="editURL" />
+                                                <a href="${editURL}" style="font-size: 25px;"><i
+                                                        class="glyphicon glyphicon-pencil"></i></a>
+                                            </div>
+                                            <div style="width: 40%;float: left">
+                                                <spring:url value="/delete?idCatalogue=${nhaCungCap.id}" var="deleteURL" /> <a href="${deleteURL}" style="font-size: 25px;"
+                                                                                                                                      onclick="return confirm('Bạn chắc chắn xoá menu có tên : ${nhaCungCap.tenNhaCungCap} ?');"><i
+                                                    class="glyphicon glyphicon-trash"></i> </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                                </tbody>
+                            </table>
+
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                </div>
+            </div>
         </section>
 
 
@@ -308,22 +388,12 @@
                     <li><a href="javascript::;"> <i
                             class="menu-icon fa fa-birthday-cake bg-red"></i>
 
-                        <div class="menu-info">
-                            <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
-
-                            <p>Will be 23 on April 24th</p>
-                        </div>
                     </a></li>
                 </ul>
                 <!-- /.control-sidebar-menu -->
 
-                <h3 class="control-sidebar-heading">Tasks Progress</h3>
                 <ul class="control-sidebar-menu">
                     <li><a href="javascript::;">
-                        <h4 class="control-sidebar-subheading">
-                            Custom Template Design <span
-                                class="label label-danger pull-right">70%</span>
-                        </h4>
 
                         <div class="progress progress-xxs">
                             <div class="progress-bar progress-bar-danger"
