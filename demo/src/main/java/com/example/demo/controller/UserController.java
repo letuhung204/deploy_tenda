@@ -1,16 +1,22 @@
 package com.example.demo.controller;
 
 import org.springframework.web.bind.annotation.PathVariable;
+
 import java.io.IOException;
+
 import com.example.demo.validator.PhotoUploadUtil;
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import com.example.demo.model.Background;
+
 import java.util.List;
+
 import com.example.demo.model.Menu;
+
 import java.util.ArrayList;
+
 import com.example.demo.model.Catalogue;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.validation.BindingResult;
@@ -77,25 +83,25 @@ public class UserController {
         return "welcome";
     }
 
-    @GetMapping({"/admin","/home"})
+    @GetMapping({"/admin", "/home"})
     public String admin(Model model) {
         return "admin";
     }
 
-    @GetMapping({ "/"})
+    @GetMapping({"/"})
     public String home(Model model) {
 
         List<Catalogue> listCatalogues = categoryRepo.findAll();
-        for (Catalogue catalogue:listCatalogues) {
+        for (Catalogue catalogue : listCatalogues) {
             List<Menu> listMenu = new ArrayList<>();
             listMenu = menuRepo.listMenuByIdCategory(catalogue.getIdCatalogue());
-            for (Menu menu:listMenu) {
+            for (Menu menu : listMenu) {
                 String[] mota = menu.getDescription().split("\\r?\\n");
                 menu.setMota(mota);
             }
             catalogue.setMenuList(listMenu);
         }
-         List<Background> backgroundList = backgroundRepo.findAll();
+        List<Background> backgroundList = backgroundRepo.findAll();
         if (backgroundList.size() != 0) {
             model.addAttribute("background", backgroundList.get(0));
         }
@@ -104,14 +110,14 @@ public class UserController {
     }
 
     @PostMapping("/save/menu")
-    public RedirectView saveMenu(@RequestParam(value = "photos",required = false) MultipartFile multipartFile, @RequestParam("title") String title,@RequestParam(value = "id",required = false) Integer id,
-                                 @RequestParam("description") String description, @RequestParam("idCategory") int catelogueId,@RequestParam(value = "price",required = false) String price) throws IOException {
+    public RedirectView saveMenu(@RequestParam(value = "photos", required = false) MultipartFile multipartFile, @RequestParam("title") String title, @RequestParam(value = "id", required = false) Integer id,
+                                 @RequestParam("description") String description, @RequestParam("idCategory") int catelogueId, @RequestParam(value = "price", required = false) String price) throws IOException {
 
-        Menu menu ;
+        Menu menu;
         String fileName;
-        if(id == null){
+        if (id == null) {
             menu = new Menu();
-        }else{
+        } else {
             menu = menuRepo.getOne(id);
         }
 
@@ -122,7 +128,7 @@ public class UserController {
 
         String originNameFile = multipartFile.getOriginalFilename();
 
-        if( originNameFile != null && !originNameFile.equals("")){
+        if (originNameFile != null && !originNameFile.equals("")) {
             fileName = StringUtils.cleanPath(originNameFile);
             menu.setPhotos(fileName);
             String uploadDir = "user-photos/";
@@ -136,7 +142,7 @@ public class UserController {
     public String callFormMenu(Model model) {
         Menu menu = new Menu();
         List<Catalogue> catalogueList = categoryRepo.findAll();
-        for (Catalogue catalogue:catalogueList) {
+        for (Catalogue catalogue : catalogueList) {
             menu.setIdCategory(catalogue.getIdCatalogue());
         }
         menu.setCatalogueList(catalogueList);
@@ -148,11 +154,11 @@ public class UserController {
     public String listAllMenu(Model model) {
         List<Menu> listMenu = new ArrayList<>();
         listMenu = menuRepo.findAll();
-        for (Menu menu:listMenu) {
+        for (Menu menu : listMenu) {
             String[] mota = menu.getDescription().split("\\r?\\n");
             menu.setMota(mota);
             Catalogue catalogue = categoryRepo.getOne(menu.getIdCategory());
-            if(catalogue !=null){
+            if (catalogue != null) {
                 menu.setCategory(catalogue.getTen());
             }
         }
@@ -161,20 +167,20 @@ public class UserController {
     }
 
     @GetMapping(value = "menu/delete/{menuId}")
-    public RedirectView deleteMenuById(@PathVariable("menuId") Integer menuId){
-        if(menuRepo.findById(menuId) != null){
+    public RedirectView deleteMenuById(@PathVariable("menuId") Integer menuId) {
+        if (menuRepo.findById(menuId) != null) {
             menuRepo.deleteById(menuId);
         }
         return new RedirectView("/menu/list", true);
     }
 
     @GetMapping(value = "/menu/{id}/edit")
-    public String edit(@PathVariable("id") int id, Model model){
+    public String edit(@PathVariable("id") int id, Model model) {
         Menu menu = menuRepo.getOne(id);
 
-        if(menu != null){
+        if (menu != null) {
             List<Catalogue> catalogueList = categoryRepo.findAll();
-            for (Catalogue catalogue:catalogueList) {
+            for (Catalogue catalogue : catalogueList) {
                 menu.setIdCategory(catalogue.getIdCatalogue());
             }
             menu.setCatalogueList(catalogueList);
