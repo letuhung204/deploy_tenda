@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.ChiTietDonHang;
 import com.example.demo.model.NguyenLieu;
 import com.example.demo.model.NhaCungCap;
 import com.example.demo.repo.NguyenLieuRepo;
@@ -32,6 +33,8 @@ public class NguyenLieuController {
         if(nhaCungCapRepo.getOne(nhaCungCap) != null){
             model.addAttribute("tenNhaCungCap",nhaCungCapRepo.getOne(nhaCungCap).getTenNhaCungCap());
         }
+        ChiTietDonHang chiTietDonHang = new ChiTietDonHang();
+        model.addAttribute("chiTietDonHang",chiTietDonHang);
         return "nguyenLieu";
     }
     @GetMapping("/them-nguyen-lieu/{maNhaCungCap}")

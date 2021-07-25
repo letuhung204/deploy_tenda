@@ -306,6 +306,7 @@
                             <a class="btn btn-primary" href="${addURL}" role="button"><i
                                     class="glyphicon glyphicon-plus"></i> Thêm Nguyên Liệu</a>
                         </div>
+
                         <!-- /.box-header -->
                         <div class="box-body">
                             <table id="example1" class="table table-bordered table-striped">
@@ -318,9 +319,16 @@
                                     <th>Đơn giá</th>
                                     <th>Đơn vị tính</th>
                                     <th>Action</th>
+                                    <th>Thêm Vào Giỏ Hàng</th>
                                 </tr>
                                 </thead>
                                 <tbody>
+                                <c:if test="${not empty ThemGioHangThanhCong}">
+                                    <div class="callout callout-warning lead">
+                                        <h4>${ThemGioHangThanhCong}</h4>
+                                        <h4 style="color: #8b1414">Note: Load lại trang để ẩn thông báo !</h4>
+                                    </div>
+                                </c:if>
                                 <c:forEach items="${nguyenLieuList}" var="nguyenLieu" varStatus="s">
                                     <tr>
                                         <td><c:out value="${s.index + 1}" /></td>
@@ -341,6 +349,21 @@
                                                                                                                                 onclick="return confirm('Bạn chắc chắn xoá nguyên liệu có tên : ${nguyenLieu.tenNguyenLieu} ?');"><i
                                                     class="glyphicon glyphicon-trash"></i> </a>
                                             </div>
+                                        </td>
+                                        <td>
+                                            <form:form  modelAttribute="chiTietDonHang" method="POST"
+                                                       action="/save-draf-don-hang?idNguyenLieu=${nguyenLieu.id}&&nhaCungCap=${maNhaCungCap}" cssClass="well form-horizontal">
+
+                                                    <label class="control-label col-sm-2 requiredField">
+                                                        Số Lượng <span class="asteriskField"> *</span>
+                                                    </label>
+
+                                                            <form:input path="soLuong" id="soLuong"
+                                                                        placeholder="nhập định dạng số" class="form-control"
+                                                                        required="true" type="text" ></form:input>
+
+                                                <button type="submit" class="btn btn-primary">Thêm Vào Giỏ</button>
+                                            </form:form>
                                         </td>
                                     </tr>
                                 </c:forEach>

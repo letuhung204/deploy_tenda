@@ -12,9 +12,20 @@ public class ChiTietDonHang {
 
     private Long idNguyenLieu;
 
+    @Column(name = "MA_DON_HANG")
     private Long maDonHang;
 
     private Long soLuong;
+
+    private String status;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public Long getId() {
         return id;

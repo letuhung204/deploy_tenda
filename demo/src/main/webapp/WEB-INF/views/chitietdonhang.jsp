@@ -31,13 +31,15 @@
     <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
     <link href="${contextPath}/resources/css/common.css" rel="stylesheet">
     <link rel="stylesheet" href="${contextPath}/resources/dist/css/skins/skin-blue.min.css">
-
+    <link href="../static/images/logo.png" href="@{/images/logo.png}"
+          rel="shortcut icon" />
     <link
             href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
             rel="stylesheet"
             integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
             crossorigin="anonymous" />
     <!-- Custom style -->
+    <link  rel="stylesheet" href="../static/css/style.css"/>
     <style type="text/css">
         .asteriskField {
             color: red;
@@ -69,7 +71,7 @@
         <!-- Logo -->
         <a href="/welcome" class="logo"> <!-- mini logo for sidebar mini 50x50 pixels -->
             <span class="logo-mini"><b>D</b>T</span> <!-- logo for regular state and mobile devices -->
-            <span class="logo-lg"><b>Habour</b> Restaurant</span>
+            <span class="logo-lg"><b>Dante</b> Restaurant</span>
         </a>
 
         <!-- Header Navbar -->
@@ -255,14 +257,24 @@
 
             <!-- Sidebar Menu -->
             <ul class="sidebar-menu">
-                <li class="active"><a class="" href="/background"><i
-                        class="glyphicon glyphicon-home"></i> <span>Quản Lý Background</span></a></li>
+                <li class="header">Menu Management</li>
+                <!-- Optionally, you can add icons to the links -->
+                <%--                <li class="active"><a href="/menu/list"><i--%>
+                <%--                        class="glyphicon glyphicon-lock"></i> <span>Account--%>
+                <%--								Management</span></a></li>--%>
                 <li class="active"><a href="/catalogue"><i
-                        class="glyphicon glyphicon-lock"></i> <span>Quản Lý Category Của Menu
-								</span></a></li>
+                        class="glyphicon glyphicon-lock"></i> <span>Category
+								Management</span></a></li>
                 <li class="active"><a class="" href="/menu/list"><i
-                        class="glyphicon glyphicon-home"></i> <span>Quản Lý Menu
-								</span></a></li>
+                        class="glyphicon glyphicon-home"></i> <span>Menu
+								Management</span></a></li>
+                <li class="active"><a class="" href="#"><i
+                        class="glyphicon glyphicon-info-sign"></i> <span>Introduce
+								About Web</span></a></li>
+
+                <li class="active"><a class="" href="#"><i
+                        class="glyphicon glyphicon-question-sign"></i> <span>Help
+								Us !</span></a></li>
             </ul>
             <!-- /.sidebar-menu -->
         </section>
@@ -274,66 +286,73 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Habour Restaurant
+                Admin System: <small>Dante Restaurant</small>
             </h1>
             <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                <li class="active">Category</li>
+                <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
+                <li class="active">Here</li>
             </ol>
         </section>
         <%--        main content--%>
         <section class="content">
-
             <div class="row">
                 <div class="col-xs-12">
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Bảng Dữ Liệu Category </h3>
+                            <h3 class="box-title">Đơn Hàng Đối Với Nhà Cung Cấp : </h3>
                         </div>
+
                         <!-- /.box-header -->
                         <div class="box-body">
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Tên category</th>
-                                    <th>Mô tả chi tiết</th>
+                                    <th>Tên Nguyên Liệu</th>
+                                    <th>Mã nguyên liệu</th>
+                                    <th>Loại Nguyên Liệu</th>
+                                    <th>Đơn giá</th>
+                                    <th>Đơn vị tính</th>
                                     <th>Action</th>
+                                    <th>Thêm Vào Giỏ Hàng</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <c:if test="${not empty Notification}">
-                                    <div class="callout callout-warning lead">
-                                        <h4>${Notification}</h4>
-                                        <h4 style="color: #8b1414">Note: Load lại trang để ẩn thông báo !</h4>
-                                    </div>
-                                </c:if>
-
-                                <c:forEach items="${listCategory}" var="category" varStatus="s">
-                                    <c:if test="${not empty Notification}">
-                                        <c:if test="${id_category == category.idCatalogue}">
-                                            <spring:url value="/delete/continue?idCatalogue=${category.idCatalogue}" var="deleteURL" />
-                                            <button type="button" class="btn btn-danger" style="margin-bottom: 20px;"><a href="${deleteURL}" style="font-size: 20px;color: white;text-decoration: none;"
-                                                       onclick="return confirm('Thao tác này sẽ xóa category và xóa mọi Menu Item thuộc category : ${category.ten}.Bạn Có thực sự muốn xóa ?');">Vẫn Thực Hiện Xóa <c:out value="${category.ten}" /></a></button>
-                                        </c:if>
-
-                                    </c:if>
+                                <c:forEach items="${nguyenLieuList}" var="nguyenLieu" varStatus="s">
                                     <tr>
                                         <td><c:out value="${s.index + 1}" /></td>
-                                        <td><c:out value="${category.ten}" /></td>
-                                        <td><c:out value="${category.chitiet}" /></td>
+                                        <td><c:out value="${nguyenLieu.tenNguyenLieu}" /></td>
+                                        <td><c:out value="${nguyenLieu.maNguyenLieu}" /></td>
+                                        <td><c:out value="${nguyenLieu.loaiNguyenLieu}" /></td>
+                                        <td><c:out value="${nguyenLieu.donGia}" /></td>
+                                        <td><c:out value="${nguyenLieu.donViTinh}" /></td>
                                         <td>
                                             <div style="margin-left: 5px;width: 40%;float: left;">
                                                 <spring:url
-                                                        value="/catagory/${category.idCatalogue}/edit" var="editURL" />
+                                                        value="/them-nguyen-lieu/${maNhaCungCap}?id=${nguyenLieu.id}" var="editURL" />
                                                 <a href="${editURL}" style="font-size: 25px;"><i
                                                         class="glyphicon glyphicon-pencil"></i></a>
                                             </div>
                                             <div style="width: 40%;float: left">
-                                                <spring:url value="/delete?idCatalogue=${category.idCatalogue}" var="deleteURL" /> <a href="${deleteURL}" style="font-size: 25px;"
-                                                                                                                  onclick="return confirm('Bạn chắc chắn xoá menu có tên : ${category.ten} ?');"><i
+                                                <spring:url value="/delete-nguyen-lieu/${maNhaCungCap}?id=${nguyenLieu.id}" var="deleteURL" /> <a href="${deleteURL}" style="font-size: 25px;"
+                                                                                                                                                  onclick="return confirm('Bạn chắc chắn xoá nguyên liệu có tên : ${nguyenLieu.tenNguyenLieu} ?');"><i
                                                     class="glyphicon glyphicon-trash"></i> </a>
                                             </div>
+                                        </td>
+                                        <td>
+                                            <form:form  modelAttribute="chiTietDonHang" method="POST"
+                                                        action="/save-draf-don-hang?idNguyenLieu=${nguyenLieu.id}&&nhaCungCap=${maNhaCungCap}" cssClass="well form-horizontal">
+
+                                                <label class="control-label col-sm-2 requiredField">
+                                                    Số Lượng <span class="asteriskField"> *</span>
+                                                </label>
+
+                                                <form:input path="soLuong" id="soLuong"
+                                                            placeholder="nhập định dạng số" class="form-control"
+                                                            required="true" type="text" ></form:input>
+
+                                                <button type="submit" class="btn btn-primary">Thêm Vào Giỏ</button>
+                                            </form:form>
                                         </td>
                                     </tr>
                                 </c:forEach>
@@ -356,9 +375,9 @@
     <!-- Main Footer -->
     <footer class="main-footer">
         <!-- To the right -->
-        <div class="pull-right hidden-xs">Habour </div>
+        <div class="pull-right hidden-xs">Dante </div>
         <!-- Default to the left -->
-        <strong>Admin <a href="#">Habour
+        <strong>Admin <a href="#">Dante
             Restaurant</a>
         </strong>
     </footer>
@@ -381,22 +400,12 @@
                     <li><a href="javascript::;"> <i
                             class="menu-icon fa fa-birthday-cake bg-red"></i>
 
-                        <div class="menu-info">
-                            <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
-
-                            <p>Will be 23 on April 24th</p>
-                        </div>
                     </a></li>
                 </ul>
                 <!-- /.control-sidebar-menu -->
 
-                <h3 class="control-sidebar-heading">Tasks Progress</h3>
                 <ul class="control-sidebar-menu">
                     <li><a href="javascript::;">
-                        <h4 class="control-sidebar-subheading">
-                            Custom Template Design <span
-                                class="label label-danger pull-right">70%</span>
-                        </h4>
 
                         <div class="progress progress-xxs">
                             <div class="progress-bar progress-bar-danger"
