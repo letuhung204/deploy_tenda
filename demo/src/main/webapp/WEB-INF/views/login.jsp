@@ -160,13 +160,13 @@
       <div class="login-container">
           <div class="login-container-img">
               <h1>Welcome to
-                  <span>The Habour</span>
+                  <span>Login</span>
               </h1>
           </div>
           <div class="login-container-content">
               <form method="POST" action="${contextPath}/login" class="login-form">
                   <div class="${error != null ? 'has-error' : ''}">
-                      <h1>The Habour Login</h1>
+                      <h1> Login</h1>
                       <p class="field">
                           <label>User Name</label>
                           <span style="color: red">${message}</span>

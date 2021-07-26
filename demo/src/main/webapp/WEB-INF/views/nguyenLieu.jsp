@@ -9,7 +9,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>THE HABOUR COCKTAIL-LOUNGE</title>
+    <title>Module Nguyên Liệu</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta
             content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
@@ -305,6 +305,9 @@
                             <spring:url value="/them-nguyen-lieu/${maNhaCungCap}" var="addURL" />
                             <a class="btn btn-primary" href="${addURL}" role="button"><i
                                     class="glyphicon glyphicon-plus"></i> Thêm Nguyên Liệu</a>
+
+                            <spring:url value="/gioHang?maNhaCungCap=${maNhaCungCap}" var="diToiGio" />
+                            <a class="btn btn-primary" href="${diToiGio}" role="button"></i> Tới Giỏ Hàng Của Bạn</a>
                         </div>
 
                         <!-- /.box-header -->

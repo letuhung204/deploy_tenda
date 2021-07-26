@@ -9,7 +9,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>THE HABOUR COCKTAIL-LOUNGE</title>
+    <title>Module Nguyên Liệu</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta
             content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
@@ -61,6 +61,7 @@
             font-family: "Catorze 27 Black";
             src: url("${contextPath}/resources/fonts/Catorze27Style1-Black.otf") format("opentype");
         }
+
     </style>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -299,66 +300,57 @@
                 <div class="col-xs-12">
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Đơn Hàng Đối Với Nhà Cung Cấp : </h3>
+                            <h3 class="box-title">Thông tin đơn hàng </h3>
                         </div>
 
                         <!-- /.box-header -->
                         <div class="box-body">
+                            <h4 class="box-title">Tên Nhà Cung Cấp : <strong>${chiTietDonHangList.tenNhaCungCap}</strong> </h4>
+                            <h4 class="box-title">Tổng Gía Trị Đơn Hàng : <strong>${chiTietDonHangList.tongGiaDonHang}</strong> </h4>
+
+                            <div class="box-header">
+                                <spring:url value="/save-hoa-don?maNhaCungCap=${chiTietDonHangList.maNhaCungCap}" var="addURL" />
+                                <a class="btn btn-primary" href="${addURL}" role="button"><i
+                                        class="glyphicon glyphicon-plus"></i> Xác Nhận Đặt Hàng</a>
+                            </div>
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
                                     <th>#</th>
                                     <th>Tên Nguyên Liệu</th>
-                                    <th>Mã nguyên liệu</th>
-                                    <th>Loại Nguyên Liệu</th>
                                     <th>Đơn giá</th>
-                                    <th>Đơn vị tính</th>
+                                    <th>Sô Lượng</th>
+                                    <th>Tổng Gía</th>
+                                    <th>Đơn vị</th>
                                     <th>Action</th>
-                                    <th>Thêm Vào Giỏ Hàng</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <c:forEach items="${nguyenLieuList}" var="nguyenLieu" varStatus="s">
+                                <c:if test="${not empty Delete}">
+                                    <div class="callout callout-warning lead">
+                                        <h4>${Delete}</h4>
+                                        <h4 style="color: #8b1414">Note: Load lại trang để ẩn thông báo !</h4>
+                                    </div>
+                                </c:if>
+                                <c:forEach items="${chiTietDonHangList.chitietDonHangResponseList}" var="chiTietDonHang" varStatus="s">
                                     <tr>
                                         <td><c:out value="${s.index + 1}" /></td>
-                                        <td><c:out value="${nguyenLieu.tenNguyenLieu}" /></td>
-                                        <td><c:out value="${nguyenLieu.maNguyenLieu}" /></td>
-                                        <td><c:out value="${nguyenLieu.loaiNguyenLieu}" /></td>
-                                        <td><c:out value="${nguyenLieu.donGia}" /></td>
-                                        <td><c:out value="${nguyenLieu.donViTinh}" /></td>
+                                        <td><c:out value="${chiTietDonHang.tenNguyenLieu}" /></td>
+                                        <td><c:out value="${chiTietDonHang.donGia}" /></td>
+                                        <td><c:out value="${chiTietDonHang.soLuong}" /></td>
+                                        <td><c:out value="${chiTietDonHang.tongGiaSanPham}" /></td>
+                                        <td><c:out value="${chiTietDonHang.donViTinh}" /></td>
                                         <td>
-                                            <div style="margin-left: 5px;width: 40%;float: left;">
-                                                <spring:url
-                                                        value="/them-nguyen-lieu/${maNhaCungCap}?id=${nguyenLieu.id}" var="editURL" />
-                                                <a href="${editURL}" style="font-size: 25px;"><i
-                                                        class="glyphicon glyphicon-pencil"></i></a>
-                                            </div>
                                             <div style="width: 40%;float: left">
-                                                <spring:url value="/delete-nguyen-lieu/${maNhaCungCap}?id=${nguyenLieu.id}" var="deleteURL" /> <a href="${deleteURL}" style="font-size: 25px;"
-                                                                                                                                                  onclick="return confirm('Bạn chắc chắn xoá nguyên liệu có tên : ${nguyenLieu.tenNguyenLieu} ?');"><i
+                                                <spring:url value="/xoa-nguyen-lieu-da-chon?id=${chiTietDonHang.id}&&maNhaCungCap=${chiTietDonHangList.maNhaCungCap}" var="deleteURL" /> <a href="${deleteURL}" style="font-size: 25px;"
+                                                                                                                                                  onclick="return confirm('Bạn chắc chắn xoá ?')"><i
                                                     class="glyphicon glyphicon-trash"></i> </a>
                                             </div>
-                                        </td>
-                                        <td>
-                                            <form:form  modelAttribute="chiTietDonHang" method="POST"
-                                                        action="/save-draf-don-hang?idNguyenLieu=${nguyenLieu.id}&&nhaCungCap=${maNhaCungCap}" cssClass="well form-horizontal">
-
-                                                <label class="control-label col-sm-2 requiredField">
-                                                    Số Lượng <span class="asteriskField"> *</span>
-                                                </label>
-
-                                                <form:input path="soLuong" id="soLuong"
-                                                            placeholder="nhập định dạng số" class="form-control"
-                                                            required="true" type="text" ></form:input>
-
-                                                <button type="submit" class="btn btn-primary">Thêm Vào Giỏ</button>
-                                            </form:form>
                                         </td>
                                     </tr>
                                 </c:forEach>
                                 </tbody>
                             </table>
-
                         </div>
                         <!-- /.box-body -->
                     </div>

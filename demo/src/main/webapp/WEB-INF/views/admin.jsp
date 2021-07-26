@@ -9,7 +9,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>THE HABOUR COCKTAIL-LOUNGE</title>
+    <title>Module Nguyên Liệu</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta
             content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
@@ -240,13 +240,10 @@
 
             <!-- Sidebar Menu -->
             <ul class="sidebar-menu">
-                <li class="active"><a class="" href="/background"><i
-                        class="glyphicon glyphicon-home"></i> <span>Quản Lý Background</span></a></li>
-                <li class="active"><a href="/catalogue"><i
-                        class="glyphicon glyphicon-lock"></i> <span>Quản Lý Category Của Menu
-								</span></a></li>
-                <li class="active"><a class="" href="/menu/list"><i
-                        class="glyphicon glyphicon-home"></i> <span>Quản Lý Menu
+                <li class="active"><a class="" href="/nhacungcap"><i
+                        class="glyphicon glyphicon-home"></i> <span>Quản Lý Nhà Cung Cấp</span></a></li>
+                <li class="active"><a href="/hoaDon"><i
+                        class="glyphicon glyphicon-lock"></i> <span>Hóa Đơn
 								</span></a></li>
             </ul>
             <!-- /.sidebar-menu -->
@@ -259,7 +256,7 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                The Habour Restaurant
+                Module Nguyên Liệu
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>

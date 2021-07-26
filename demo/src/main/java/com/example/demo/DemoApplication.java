@@ -13,7 +13,6 @@ import org.springframework.context.support.ResourceBundleMessageSource;
 public class DemoApplication {
 
 	public static void main(String[] args) {
-		 new File(UserController.uploadDirectory).mkdir();
 		SpringApplication.run(DemoApplication.class, args);
 	}
 

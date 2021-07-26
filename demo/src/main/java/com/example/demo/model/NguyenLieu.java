@@ -24,8 +24,8 @@ public class NguyenLieu {
     @Column(name = "SO_LUONG")
     private Long soLuong;
 
-    @Column(name = "DON_GIA",length = 1000)
-    private String donGia;
+    @Column(name = "DON_GIA")
+    private Long donGia;
 
     @Column(name = "MA_NHA_CUNG_CAP")
     private Long maNhaCungCap;
@@ -78,11 +78,11 @@ public class NguyenLieu {
         this.soLuong = soLuong;
     }
 
-    public String getDonGia() {
+    public Long getDonGia() {
         return donGia;
     }
 
-    public void setDonGia(String donGia) {
+    public void setDonGia(Long donGia) {
         this.donGia = donGia;
     }
 

@@ -10,7 +10,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>THE HABOUR COCKTAIL-LOUNGE</title>
+    <title>Module Nguyên Liệu</title>
     <meta name="Revisit-After" content="5 Days">
     <meta name="Distribution" content="Global">
     <meta name="THE-HABOUR" content="the habour">

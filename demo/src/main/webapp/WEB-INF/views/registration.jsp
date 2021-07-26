@@ -159,12 +159,12 @@
     <div class="login-container">
         <div class="login-container-img">
             <h1>Welcome to
-                <span>The Habour</span>
+                <span>Nguyên Liệu</span>
             </h1>
         </div>
         <div class="login-container-content">
             <form:form method="POST" action="${contextPath}/registration" modelAttribute="userForm" class="login-form">
-                <h1>The Habour Registration</h1>
+                <h1> Registration</h1>
                 <spring:bind path="username">
                     <p class="field ${status.error ? 'has-error' : ''}">
                         <label>User Name</label>

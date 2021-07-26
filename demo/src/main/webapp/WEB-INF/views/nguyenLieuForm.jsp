@@ -9,7 +9,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>THE HABOUR COCKTAIL-LOUNGE</title>
+<title>Module Nguyên Liệu</title>
 <!-- Tell the browser to be responsive to screen width -->
 <meta
         content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
@@ -50,7 +50,7 @@
         <!-- Logo -->
         <a href="/welcome" class="logo"> <!-- mini logo for sidebar mini 50x50 pixels -->
             <span class="logo-mini"><b>D</b>T</span> <!-- logo for regular state and mobile devices -->
-            <span class="logo-lg"><b>The Habour</b> Restaurant</span>
+            <span class="logo-lg"><b>Nguyên Liệu</b> Restaurant</span>
         </a>
 
         <!-- Header Navbar -->
@@ -255,7 +255,7 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                The Habour Restaurant
+                Module Nguyên Liệu
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>

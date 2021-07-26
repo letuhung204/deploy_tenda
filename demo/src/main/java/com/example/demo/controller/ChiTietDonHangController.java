@@ -1,6 +1,9 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.ChitietDonHangResponse;
+import com.example.demo.dto.DonHangResponse;
 import com.example.demo.model.ChiTietDonHang;
+import com.example.demo.model.NguyenLieu;
 import com.example.demo.repo.ChiTietDonHangRepo;
 import com.example.demo.repo.NguyenLieuRepo;
 import com.example.demo.repo.NhaCungCapRepo;
@@ -42,9 +45,62 @@ public class ChiTietDonHangController {
     @GetMapping("/gioHang")
     public String gioHang(@RequestParam("maNhaCungCap")Long maNhaCungCap, Model model){
         List<ChiTietDonHang> chiTietDonHangList = new ArrayList<>();
-        chiTietDonHangList = chiTietDonHangRepo.listChiTietDonHangByNhaCungCap(maNhaCungCap);
+        chiTietDonHangList = chiTietDonHangRepo.listCTĐHStatusGioHang(maNhaCungCap);
 
-        model.addAttribute("chiTietDonHangList",chiTietDonHangList);
+        ChitietDonHangResponse chitietDonHangResponse = new ChitietDonHangResponse();
+        chitietDonHangResponse.setMaNhaCungCap(maNhaCungCap);
+        chitietDonHangResponse.setTenNhaCungCap( nhaCungCapRepo.getOne(maNhaCungCap) !=null ? nhaCungCapRepo.getOne(maNhaCungCap).getTenNhaCungCap() :"" );
+        List<DonHangResponse> donHangResponseList = new ArrayList<>();
+        Long tong = Long.valueOf(0);
+        for (ChiTietDonHang chiTietDonHang:chiTietDonHangList) {
+            DonHangResponse donHangResponse = new DonHangResponse();
+            donHangResponse.setIdNguyenLieu(chiTietDonHang.getIdNguyenLieu());
+            NguyenLieu nguyenLieu = nguyenLieuRepo.getOne(chiTietDonHang.getIdNguyenLieu());
+            donHangResponse.setTenNguyenLieu(nguyenLieu.getTenNguyenLieu());
+            donHangResponse.setDonGia(nguyenLieu.getDonGia());
+            donHangResponse.setDonViTinh(nguyenLieu.getDonViTinh());
+            donHangResponse.setSoLuong(chiTietDonHang.getSoLuong());
+            donHangResponse.setTongGiaSanPham(chiTietDonHang.getSoLuong() * nguyenLieu.getDonGia());
+            donHangResponse.setId(chiTietDonHang.getId());
+
+            donHangResponseList.add(donHangResponse);
+            tong += donHangResponse.getTongGiaSanPham();
+        }
+        chitietDonHangResponse.setChitietDonHangResponseList(donHangResponseList);
+        chitietDonHangResponse.setTongGiaDonHang(tong);
+
+        model.addAttribute("chiTietDonHangList",chitietDonHangResponse);
         return "chitietdonhang";
+    }
+    @PostMapping("/save-hoa-don")
+    public RedirectView saveHoaDon(@RequestParam("maNhaCungCap")Long maNhaCungCap,RedirectAttributes redirectAttributes){
+        List<ChiTietDonHang>  chiTietDonHangList = chiTietDonHangRepo.listCTĐHStatusGioHang(maNhaCungCap);
+        for (ChiTietDonHang chiTietDonHang:chiTietDonHangList) {
+            chiTietDonHang.setStatus("DA_DAT_HANG");
+            chiTietDonHangRepo.save(chiTietDonHang);
+        }
+        redirectAttributes.addFlashAttribute("THONGBAO","bạn đã đặt hàng thành công !");
+        return new RedirectView("/gioHang?maNhaCungCap="+maNhaCungCap,true);
+    }
+
+    @GetMapping(value = "/hoaDon")
+    public String hoaDon(Model model){
+        List<ChiTietDonHang> chiTietDonHangList = chiTietDonHangRepo.listCTĐHStatus();
+        model.addAttribute("hoadon",chiTietDonHangList);
+        return "hoaDon";
+    }
+
+
+    @GetMapping("/xoa-nguyen-lieu-da-chon")
+    public RedirectView xoaNguyenLieuDaChon(@RequestParam("id")Long id,@RequestParam("maNhaCungCap")Long maNhaCungCap, RedirectAttributes redirectAttributes){
+        ChiTietDonHang chiTietDonHang = chiTietDonHangRepo.getOne(id);
+        if(chiTietDonHang != null){
+            chiTietDonHangRepo.deleteById(id);
+            redirectAttributes.addFlashAttribute("Delete","xóa thành công");
+        }else{
+            redirectAttributes.addFlashAttribute("Delete","xóa thất bại do không tồn tại");
+        }
+
+        return new RedirectView("/gioHang?maNhaCungCap="+maNhaCungCap ,true);
     }
 }
