@@ -120,6 +120,20 @@
                             <spring:url value="/gioHang?maNhaCungCap=${maNhaCungCap}" var="diToiGio" />
                             <a class="btn btn-primary" href="${diToiGio}" role="button"></i> Tới Giỏ Hàng Của Bạn</a>
                         </div>
+                        <div class="box-header">
+                            <form:form method="GET" modelAttribute="test"
+                                       action="/nguyenlieu/${maNhaCungCap}?tenNguyenLieu=${tenNguyenLieu}" cssClass="well form-horizontal">
+
+                            <div class="input-group">
+                                <form:input path="tenNguyenLieu" id="tenNguyenLieu"
+                                            placeholder="nhập tên nguyên liệu" class="form-control"
+                                            type="text" ></form:input>
+
+                                <button class="btn btn-primary" type="submit" role="button" style="margin-top: 10px;"><i
+                                        class="glyphicon glyphicon-search"></i> Tìm Kiếm</button>
+                            </div>
+
+                        </div>
 
                         <!-- /.box-header -->
                         <div class="box-body">
@@ -165,19 +179,34 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <form:form  modelAttribute="chiTietDonHang" method="POST"
-                                                        action="/save-draf-don-hang?idNguyenLieu=${nguyenLieu.id}&&nhaCungCap=${maNhaCungCap}" cssClass="well form-horizontal">
-
                                                 <label class="control-label col-sm-2 requiredField">
                                                     Số Lượng <span class="asteriskField"> *</span>
                                                 </label>
 
-                                                <form:input path="soLuong" id="soLuong"
-                                                            placeholder="nhập định dạng số" class="form-control"
-                                                            required="true" type="text" ></form:input>
+                                                <form:input path="soLuong" id="soLuong" cssStyle="width: 50%"
+                                                            class="form-control"
+                                                             type="number" />
 
-                                                <button type="submit" class="btn btn-primary">Thêm Vào Giỏ</button>
-                                            </form:form>
+                                                <button type="submit" class="btn btn-primary" style="margin-top: 10px" onclick="callApi()">Thêm Vào Giỏ</button>
+                                                <script>
+                                                    function callApi() {
+                                                        var soLuong = document.getElementById("soLuong").value;
+
+                                                        if(soLuong != null){
+                                                            var finalUrl = "/save-draf-don-hang/${maNhaCungCap}/${nguyenLieu.id}"+"?soLuong="+soLuong;
+                                                            $.ajax({
+                                                                url: finalUrl,
+                                                                cache: false,
+                                                                success: function (html) {
+                                                                    // Parse the recieved data here.
+                                                                    console.log(html);
+                                                                    alert("thêm vào giỏ hàng thành công")
+                                                                }
+                                                            });
+                                                        }
+                                                    }
+                                                </script>
+<%--                                            </form:form>--%>
                                         </td>
                                     </tr>
                                 </c:forEach>
@@ -186,6 +215,7 @@
 
                         </div>
                         <!-- /.box-body -->
+                        </form:form>
                     </div>
                 </div>
             </div>

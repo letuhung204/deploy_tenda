@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.util.ArrayList;
 import java.util.List;
 @Controller
 public class NguyenLieuController {
@@ -23,15 +24,19 @@ public class NguyenLieuController {
     @Autowired
     private NhaCungCapRepo nhaCungCapRepo;
 
-    @GetMapping("/nguyenlieu")
-    public String nguyenLieu(Model model,@RequestParam("nhaCungCap")Long nhaCungCap){
-
-        List<NguyenLieu> nguyenLieuList = nguyenLieuRepo.getListNguyenLieuByNhaCungCap(nhaCungCap);
-
+    @GetMapping("/nguyenlieu/{maNhaCungCap}")
+    public String nguyenLieu(Model model,@PathVariable("maNhaCungCap")Long maNhaCungCap,@RequestParam(value = "tenNguyenLieu",required = false)String tenNguyenLieu){
+        List<NguyenLieu> nguyenLieuList = new ArrayList<>();
+        if(tenNguyenLieu != null && !"".equals(tenNguyenLieu)){
+            nguyenLieuList = nguyenLieuRepo.getListNguyenLieuByNhaCungCapSearch(maNhaCungCap,tenNguyenLieu);
+        }else{
+            nguyenLieuList = nguyenLieuRepo.getListNguyenLieuByNhaCungCap(maNhaCungCap);
+        }
+        model.addAttribute("test",new NguyenLieu());
         model.addAttribute("nguyenLieuList",nguyenLieuList);
-        model.addAttribute("maNhaCungCap",nhaCungCap);
-        if(nhaCungCapRepo.getOne(nhaCungCap) != null){
-            model.addAttribute("tenNhaCungCap",nhaCungCapRepo.getOne(nhaCungCap).getTenNhaCungCap());
+        model.addAttribute("maNhaCungCap",maNhaCungCap);
+        if(nhaCungCapRepo.getOne(maNhaCungCap) != null){
+            model.addAttribute("tenNhaCungCap",nhaCungCapRepo.getOne(maNhaCungCap).getTenNhaCungCap());
         }
         ChiTietDonHang chiTietDonHang = new ChiTietDonHang();
         model.addAttribute("chiTietDonHang",chiTietDonHang);
@@ -70,7 +75,7 @@ public class NguyenLieuController {
             if(nguyenLieu !=null){
                 nguyenLieu.setMaNhaCungCap(maNhaCungCap);
                 nguyenLieuRepo.save(nguyenLieu);
-                return new RedirectView("/nguyenlieu?nhaCungCap="+ maNhaCungCap,true);
+                return new RedirectView("/nguyenlieu/"+ maNhaCungCap,true);
             }else{
                 redirectAttributes.addFlashAttribute("message","Thêm nguyên liệu lỗi, vui lòng nhập đúng thông tin !");
                 return new RedirectView("/them-nguyen-lieu/${}",true);
@@ -84,6 +89,6 @@ public class NguyenLieuController {
         if(nguyenLieu !=null){
             nguyenLieuRepo.delete(nguyenLieu);
         }
-        return new RedirectView("/nguyenlieu?nhaCungCap="+ maNhaCungCap,true);
+        return new RedirectView("/nguyenlieu/"+ maNhaCungCap,true);
     }
 }

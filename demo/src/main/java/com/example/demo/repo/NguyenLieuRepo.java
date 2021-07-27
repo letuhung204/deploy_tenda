@@ -19,4 +19,7 @@ public interface NguyenLieuRepo extends JpaRepository<NguyenLieu,Long> {
     @Transactional
     @Modifying
     public void deleteNguyenLieuByNhaCC(@Param("maNhaCungCap")Long maNhaCungCap);
+
+    @Query(value = "select * from NGUYEN_LIEU a where a.MA_NHA_CUNG_CAP =:maNhaCungCap and a.TEN_NGUYEN_LIEU LIKE CONCAT('%',:tenNguyenLieu,'%')",nativeQuery = true)
+    public List<NguyenLieu> getListNguyenLieuByNhaCungCapSearch(@Param("maNhaCungCap")Long maNhaCungCap,@Param("tenNguyenLieu")String tenNguyenLieu);
 }

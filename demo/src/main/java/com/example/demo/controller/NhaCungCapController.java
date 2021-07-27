@@ -25,13 +25,13 @@ public class NhaCungCapController {
     @GetMapping("/nhacungcap")
     public String nhaCungCap(Model model, @RequestParam(value = "tenNhaCungCap", required = false) String tenNhaCungCap) {
         List<NhaCungCap> nhaCungCapList = new ArrayList<>();
-        if (null == tenNhaCungCap) {
+        if (null != tenNhaCungCap && !"".equals(tenNhaCungCap)) {
             nhaCungCapList = nhaCungCapRepo.listNhaCungCapByName(tenNhaCungCap);
         }else {
           nhaCungCapList = nhaCungCapRepo.findAll();
         }
-        model.addAttribute("nhaCungCapList", nhaCungCapList);
         model.addAttribute("test",new NhaCungCap());
+        model.addAttribute("nhaCungCapList", nhaCungCapList);
         return "nhaCungCap";
     }
 

@@ -119,19 +119,17 @@
                         </div>
 
                         <div class="box-header">
-
                             <form:form method="GET" modelAttribute="test"
-                                       action="${getURL}" cssClass="well form-horizontal">
+                                       action="/nhacungcap?tenNhaCungCap=${tenNhaCungCap}" cssClass="well form-horizontal">
+
                                 <div class="input-group">
                                     <form:input path="tenNhaCungCap" id="tenNhaCungCap"
                                                 placeholder="nhập tên nhà cung cấp" class="form-control"
                                                  type="text" ></form:input>
-                                    <spring:url value="/nhacungcap?tenNhaCungCap=${tenNhaCungCap}" var="getURL" />
-                                    <a class="btn btn-primary" href="${getURL}" role="button"><i
-                                            class="glyphicon glyphicon-search"></i> Tìm Kiếm</a>
-                                </div>
 
-                            </form:form>
+                                    <button class="btn btn-primary" type="submit" role="button" style="margin-top: 10px;"><i
+                                            class="glyphicon glyphicon-search"></i> Tìm Kiếm</button>
+                                </div>
 
                         </div>
                         <!-- /.box-header -->
@@ -160,16 +158,16 @@
                                         <td>
                                             <div style="margin-left: 5px;width: 40%;float: left;">
                                                 <spring:url
-                                                        value="/nguyenlieu?nhaCungCap=${nhaCungCap.id}" var="listURL" />
+                                                        value="/nguyenlieu/${nhaCungCap.id}" var="listURL" />
                                                 <a href="${listURL}" style="font-size: 25px;">Danh Sách Nguyên Liệu</a>
                                             </div>
-                                            <div style="margin-left: 5px;width: 40%;float: left;">
+                                            <div style="margin-left: 25px;width: 10%;float: left;">
                                                 <spring:url
                                                         value="/them-nha-cung-cap?id=${nhaCungCap.id}" var="editURL" />
                                                 <a href="${editURL}" style="font-size: 25px;"><i
                                                         class="glyphicon glyphicon-pencil"></i></a>
                                             </div>
-                                            <div style="width: 40%;float: left">
+                                            <div style="width: 10%;float: left">
                                                 <spring:url value="/delete-nha-cung-cap/${nhaCungCap.id}" var="deleteURL" /> <a href="${deleteURL}" style="font-size: 25px;"
                                                                                                                                 onclick="return confirm('Bạn chắc chắn xoá nhà cung cấp có tên : ${nhaCungCap.tenNhaCungCap} ?');"><i
                                                     class="glyphicon glyphicon-trash"></i> </a>
@@ -182,6 +180,7 @@
 
                         </div>
                         <!-- /.box-body -->
+                        </form:form>
                     </div>
                 </div>
             </div>
