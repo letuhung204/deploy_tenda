@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -21,29 +22,35 @@ public class NhaCungCapController {
     @Autowired
     private NguyenLieuRepo nguyenLieuRepo;
 
-        @GetMapping("/nhacungcap")
-    public String nhaCungCap(Model model){
-        List<NhaCungCap> nhaCungCapList = nhaCungCapRepo.findAll();
-
-       model.addAttribute("nhaCungCapList",nhaCungCapList);
-       return "nhaCungCap";
+    @GetMapping("/nhacungcap")
+    public String nhaCungCap(Model model, @RequestParam(value = "tenNhaCungCap", required = false) String tenNhaCungCap) {
+        List<NhaCungCap> nhaCungCapList = new ArrayList<>();
+        if (null == tenNhaCungCap) {
+            nhaCungCapList = nhaCungCapRepo.listNhaCungCapByName(tenNhaCungCap);
+        }else {
+          nhaCungCapList = nhaCungCapRepo.findAll();
+        }
+        model.addAttribute("nhaCungCapList", nhaCungCapList);
+        model.addAttribute("test",new NhaCungCap());
+        return "nhaCungCap";
     }
+
     @GetMapping("/them-nha-cung-cap")
-    public String themNhaCungCap(Model model, @RequestParam(value = "id",required = false)Long id){
+    public String themNhaCungCap(Model model, @RequestParam(value = "id", required = false) Long id) {
 
         NhaCungCap nhaCungCap;
-        if(null == id){
+        if (null == id) {
             nhaCungCap = new NhaCungCap();
-        }else{
+        } else {
             nhaCungCap = nhaCungCapRepo.getOne(id);
         }
-        model.addAttribute("nhaCungCap",nhaCungCap);
+        model.addAttribute("nhaCungCap", nhaCungCap);
         return "nhaCungCapForm";
     }
 
     @PostMapping("/save-nha-cung-cap")
-    public RedirectView saveNhaCungCap(NhaCungCap nhaCungCap,RedirectAttributes redirectAttributes){
-        if(null != nhaCungCap.getId()){
+    public RedirectView saveNhaCungCap(NhaCungCap nhaCungCap, RedirectAttributes redirectAttributes) {
+        if (null != nhaCungCap.getId()) {
             NhaCungCap nhaCungCapOld = nhaCungCapRepo.getOne(nhaCungCap.getId());
             nhaCungCapOld.setDiaChi(nhaCungCap.getDiaChi());
             nhaCungCapOld.setEmail(nhaCungCap.getEmail());
@@ -52,26 +59,26 @@ public class NhaCungCapController {
             nhaCungCapOld.setTenNhaCungCap(nhaCungCap.getTenNhaCungCap());
 
             nhaCungCapRepo.save(nhaCungCapOld);
-            return new RedirectView("/nhacungcap",true);
-        }else{
-            if(nhaCungCap !=null){
+            return new RedirectView("/nhacungcap", true);
+        } else {
+            if (nhaCungCap != null) {
                 nhaCungCapRepo.save(nhaCungCap);
-                return new RedirectView("/nhacungcap",true);
-            }else{
-                redirectAttributes.addFlashAttribute("message","Thêm nhà cung cấp lỗi, vui lòng nhập đúng thông tin !");
-                return new RedirectView("/them-nha-cung-cap",true);
+                return new RedirectView("/nhacungcap", true);
+            } else {
+                redirectAttributes.addFlashAttribute("message", "Thêm nhà cung cấp lỗi, vui lòng nhập đúng thông tin !");
+                return new RedirectView("/them-nha-cung-cap", true);
             }
         }
     }
 
     @GetMapping("/delete-nha-cung-cap/{id}")
-    public RedirectView xoaNhaCungCap(@PathVariable Long id){
+    public RedirectView xoaNhaCungCap(@PathVariable Long id) {
         NhaCungCap nhaCungCap = nhaCungCapRepo.getOne(id);
-        if(nhaCungCap !=null){
+        if (nhaCungCap != null) {
             nhaCungCapRepo.delete(nhaCungCap);
             nguyenLieuRepo.deleteNguyenLieuByNhaCC(id);
         }
-        return new RedirectView("/nhacungcap",true);
+        return new RedirectView("/nhacungcap", true);
     }
 
 }

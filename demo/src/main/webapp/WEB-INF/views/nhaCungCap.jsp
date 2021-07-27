@@ -117,6 +117,23 @@
                             <a class="btn btn-primary" href="${addURL}" role="button"><i
                                     class="glyphicon glyphicon-plus"></i> Thêm Nhà Cung Cấp</a>
                         </div>
+
+                        <div class="box-header">
+
+                            <form:form method="GET" modelAttribute="test"
+                                       action="${getURL}" cssClass="well form-horizontal">
+                                <div class="input-group">
+                                    <form:input path="tenNhaCungCap" id="tenNhaCungCap"
+                                                placeholder="nhập tên nhà cung cấp" class="form-control"
+                                                 type="text" ></form:input>
+                                    <spring:url value="/nhacungcap?tenNhaCungCap=${tenNhaCungCap}" var="getURL" />
+                                    <a class="btn btn-primary" href="${getURL}" role="button"><i
+                                            class="glyphicon glyphicon-search"></i> Tìm Kiếm</a>
+                                </div>
+
+                            </form:form>
+
+                        </div>
                         <!-- /.box-header -->
                         <div class="box-body">
                             <table id="example1" class="table table-bordered table-striped">
