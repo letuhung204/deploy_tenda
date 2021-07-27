@@ -72,7 +72,7 @@ public class ChiTietDonHangController {
         model.addAttribute("chiTietDonHangList",chitietDonHangResponse);
         return "chitietdonhang";
     }
-    @PostMapping("/save-hoa-don")
+    @GetMapping("/save-hoa-don")
     public RedirectView saveHoaDon(@RequestParam("maNhaCungCap")Long maNhaCungCap,RedirectAttributes redirectAttributes){
         List<ChiTietDonHang>  chiTietDonHangList = chiTietDonHangRepo.listCTĐHStatusGioHang(maNhaCungCap);
         for (ChiTietDonHang chiTietDonHang:chiTietDonHangList) {
@@ -86,8 +86,44 @@ public class ChiTietDonHangController {
     @GetMapping(value = "/hoaDon")
     public String hoaDon(Model model){
         List<ChiTietDonHang> chiTietDonHangList = chiTietDonHangRepo.listCTĐHStatus();
-        model.addAttribute("hoadon",chiTietDonHangList);
+        List<ChitietDonHangResponse> chitietDonHangResponseList = new ArrayList<>();
+        for (ChiTietDonHang chiTietDonHang:chiTietDonHangList){
+            ChitietDonHangResponse chitietDonHangResponse = new ChitietDonHangResponse();
+            chitietDonHangResponse.setMaNhaCungCap(chiTietDonHang.getMaDonHang());
+            chitietDonHangResponse.setTenNhaCungCap(nhaCungCapRepo.getOne(chiTietDonHang.getMaDonHang()).getTenNhaCungCap());
+            chitietDonHangResponseList.add(chitietDonHangResponse);
+        }
+        model.addAttribute("hoadon",chitietDonHangResponseList);
         return "hoaDon";
+    }
+
+    @GetMapping(value = "/chiTietHoaDon")
+    public String chiTietHoaDon(Model model,@RequestParam("maNhaCungCap")Long maNhaCungCap){
+        List<ChiTietDonHang> chiTietDonHangList = chiTietDonHangRepo.listCTĐHStatusDatHang(maNhaCungCap);
+
+        ChitietDonHangResponse chitietDonHangResponse = new ChitietDonHangResponse();
+        chitietDonHangResponse.setMaNhaCungCap(maNhaCungCap);
+        chitietDonHangResponse.setTenNhaCungCap( nhaCungCapRepo.getOne(maNhaCungCap) !=null ? nhaCungCapRepo.getOne(maNhaCungCap).getTenNhaCungCap() :"" );
+        List<DonHangResponse> donHangResponseList = new ArrayList<>();
+        Long tong = Long.valueOf(0);
+        for (ChiTietDonHang chiTietDonHang:chiTietDonHangList) {
+            DonHangResponse donHangResponse = new DonHangResponse();
+            donHangResponse.setIdNguyenLieu(chiTietDonHang.getIdNguyenLieu());
+            NguyenLieu nguyenLieu = nguyenLieuRepo.getOne(chiTietDonHang.getIdNguyenLieu());
+            donHangResponse.setTenNguyenLieu(nguyenLieu.getTenNguyenLieu());
+            donHangResponse.setDonGia(nguyenLieu.getDonGia());
+            donHangResponse.setDonViTinh(nguyenLieu.getDonViTinh());
+            donHangResponse.setSoLuong(chiTietDonHang.getSoLuong());
+            donHangResponse.setTongGiaSanPham(chiTietDonHang.getSoLuong() * nguyenLieu.getDonGia());
+            donHangResponse.setId(chiTietDonHang.getId());
+
+            donHangResponseList.add(donHangResponse);
+            tong += donHangResponse.getTongGiaSanPham();
+        }
+        chitietDonHangResponse.setChitietDonHangResponseList(donHangResponseList);
+        chitietDonHangResponse.setTongGiaDonHang(tong);
+        model.addAttribute("chitiethoadon",chitietDonHangResponse);
+        return "chitiethoadon";
     }
 
 

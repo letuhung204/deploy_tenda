@@ -15,10 +15,10 @@ public interface ChiTietDonHangRepo extends JpaRepository<ChiTietDonHang,Long> {
     @Query(value = "select * from CHI_TIET_DON_HANG ct WHERE ct.MA_DON_HANG =:maNhaCungCap",nativeQuery = true)
     public List<ChiTietDonHang> listChiTietDonHangByNhaCungCap(@Param("maNhaCungCap") Long maNhaCungCap);
 
-    @Query(value = "select * from CHI_TIET_DON_HANG ct WHERE ct.MA_DON_HANG =:maNhaCungCap anđ ct.STATUS LIKE 'THEM_VAO_GIO' ",nativeQuery = true)
+    @Query(value = "select * from CHI_TIET_DON_HANG ct WHERE ct.MA_DON_HANG =:maNhaCungCap and ct.STATUS LIKE 'THEM_VAO_GIO' ",nativeQuery = true)
     public List<ChiTietDonHang> listCTĐHStatusGioHang(@Param("maNhaCungCap") Long maNhaCungCap);
 
-    @Query(value = "select * from CHI_TIET_DON_HANG ct WHERE ct.MA_DON_HANG =:maNhaCungCap  anđ ct.STATUS LIKE 'DA_DAT_HANG'",nativeQuery = true)
+    @Query(value = "select * from CHI_TIET_DON_HANG ct WHERE ct.MA_DON_HANG =:maNhaCungCap and ct.STATUS LIKE 'DA_DAT_HANG'",nativeQuery = true)
     public List<ChiTietDonHang> listCTĐHStatusDatHang(@Param("maNhaCungCap") Long maNhaCungCap);
 
     @Query(value = "select * from CHI_TIET_DON_HANG ct WHERE ct.STATUS LIKE 'DA_DAT_HANG'",nativeQuery = true)

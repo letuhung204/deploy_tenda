@@ -110,80 +110,38 @@
                 <div class="col-xs-12">
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Nhà Cung Cấp : ${tenNhaCungCap}</h3>
-                        </div>
-                        <div class="box-header">
-                            <spring:url value="/them-nguyen-lieu/${maNhaCungCap}" var="addURL" />
-                            <a class="btn btn-primary" href="${addURL}" role="button"><i
-                                    class="glyphicon glyphicon-plus"></i> Thêm Nguyên Liệu</a>
-
-                            <spring:url value="/gioHang?maNhaCungCap=${maNhaCungCap}" var="diToiGio" />
-                            <a class="btn btn-primary" href="${diToiGio}" role="button"></i> Tới Giỏ Hàng Của Bạn</a>
+                            <h3 class="box-title">Thông tin Hóa Đơn Chi Tiết </h3>
                         </div>
 
                         <!-- /.box-header -->
                         <div class="box-body">
+                            <h4 class="box-title">Tên Nhà Cung Cấp : <strong>${chitiethoadon.tenNhaCungCap}</strong> </h4>
+                            <h4 class="box-title">Tổng Gía Trị Đơn Hàng : <strong>${chitiethoadon.tongGiaDonHang}</strong> </h4>
+
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
                                     <th>#</th>
                                     <th>Tên Nguyên Liệu</th>
-                                    <th>Mã nguyên liệu</th>
-                                    <th>Loại Nguyên Liệu</th>
                                     <th>Đơn giá</th>
-                                    <th>Đơn vị tính</th>
-                                    <th>Action</th>
-                                    <th>Thêm Vào Giỏ Hàng</th>
+                                    <th>Sô Lượng</th>
+                                    <th>Tổng Gía</th>
+                                    <th>Đơn vị</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <c:if test="${not empty ThemGioHangThanhCong}">
-                                    <div class="callout callout-warning lead">
-                                        <h4>${ThemGioHangThanhCong}</h4>
-                                        <h4 style="color: #8b1414">Note: Load lại trang để ẩn thông báo !</h4>
-                                    </div>
-                                </c:if>
-                                <c:forEach items="${nguyenLieuList}" var="nguyenLieu" varStatus="s">
+                                <c:forEach items="${chitiethoadon.chitietDonHangResponseList}" var="chitiethoadon" varStatus="s">
                                     <tr>
                                         <td><c:out value="${s.index + 1}" /></td>
-                                        <td><c:out value="${nguyenLieu.tenNguyenLieu}" /></td>
-                                        <td><c:out value="${nguyenLieu.maNguyenLieu}" /></td>
-                                        <td><c:out value="${nguyenLieu.loaiNguyenLieu}" /></td>
-                                        <td><c:out value="${nguyenLieu.donGia}" /></td>
-                                        <td><c:out value="${nguyenLieu.donViTinh}" /></td>
-                                        <td>
-                                            <div style="margin-left: 5px;width: 40%;float: left;">
-                                                <spring:url
-                                                        value="/them-nguyen-lieu/${maNhaCungCap}?id=${nguyenLieu.id}" var="editURL" />
-                                                <a href="${editURL}" style="font-size: 25px;"><i
-                                                        class="glyphicon glyphicon-pencil"></i></a>
-                                            </div>
-                                            <div style="width: 40%;float: left">
-                                                <spring:url value="/delete-nguyen-lieu/${maNhaCungCap}?id=${nguyenLieu.id}" var="deleteURL" /> <a href="${deleteURL}" style="font-size: 25px;"
-                                                                                                                                                  onclick="return confirm('Bạn chắc chắn xoá nguyên liệu có tên : ${nguyenLieu.tenNguyenLieu} ?');"><i
-                                                    class="glyphicon glyphicon-trash"></i> </a>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <form:form  modelAttribute="chiTietDonHang" method="POST"
-                                                        action="/save-draf-don-hang?idNguyenLieu=${nguyenLieu.id}&&nhaCungCap=${maNhaCungCap}" cssClass="well form-horizontal">
-
-                                                <label class="control-label col-sm-2 requiredField">
-                                                    Số Lượng <span class="asteriskField"> *</span>
-                                                </label>
-
-                                                <form:input path="soLuong" id="soLuong"
-                                                            placeholder="nhập định dạng số" class="form-control"
-                                                            required="true" type="text" ></form:input>
-
-                                                <button type="submit" class="btn btn-primary">Thêm Vào Giỏ</button>
-                                            </form:form>
-                                        </td>
+                                        <td><c:out value="${chitiethoadon.tenNguyenLieu}" /></td>
+                                        <td><c:out value="${chitiethoadon.donGia}" /></td>
+                                        <td><c:out value="${chitiethoadon.soLuong}" /></td>
+                                        <td><c:out value="${chitiethoadon.tongGiaSanPham}" /></td>
+                                        <td><c:out value="${chitiethoadon.donViTinh}" /></td>
                                     </tr>
                                 </c:forEach>
                                 </tbody>
                             </table>
-
                         </div>
                         <!-- /.box-body -->
                     </div>
