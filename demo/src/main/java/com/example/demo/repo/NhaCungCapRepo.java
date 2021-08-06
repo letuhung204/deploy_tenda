@@ -15,4 +15,7 @@ import java.util.List;
 public interface NhaCungCapRepo extends JpaRepository<NhaCungCap, Long> {
     @Query(value = "select * from NHA_CUNG_CAP ncc where ncc.TEN_NHA_CUNG_CAP like CONCAT('%',:tenNhaCungCap,'%')",nativeQuery = true)
     List<NhaCungCap> listNhaCungCapByName(@Param("tenNhaCungCap") String tenNhaCungCap);
+
+    @Query(value = "select * from NHA_CUNG_CAP ncc where ncc.ID IN(select ctdh.MA_DON_HANG from CHI_TIET_DON_HANG ctdh where ctdh.STATUS LIKE 'DA_DAT_HANG')",nativeQuery = true)
+    List<NhaCungCap> listNhaCungCapHoaDon();
 }

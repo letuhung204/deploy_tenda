@@ -131,7 +131,7 @@
                                         <td><c:out value="${hoadon.tenNhaCungCap}" /></td>
                                         <td>
                                             <div style="width: 40%;float: left">
-                                                <spring:url value="/chiTietHoaDon?maNhaCungCap=${hoadon.maNhaCungCap}" var="chiTietURL" /> <a href="${chiTietURL}" style="font-size: 25px;">
+                                                <spring:url value="/chiTietHoaDon?maNhaCungCap=${hoadon.id}" var="chiTietURL" /> <a href="${chiTietURL}" style="font-size: 25px;">
                                                 Chi Tiết Hóa Đơn
                                             </a>
                                             </div>

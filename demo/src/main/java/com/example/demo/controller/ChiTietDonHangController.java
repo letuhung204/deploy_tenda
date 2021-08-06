@@ -4,6 +4,7 @@ import com.example.demo.dto.ChitietDonHangResponse;
 import com.example.demo.dto.DonHangResponse;
 import com.example.demo.model.ChiTietDonHang;
 import com.example.demo.model.NguyenLieu;
+import com.example.demo.model.NhaCungCap;
 import com.example.demo.repo.ChiTietDonHangRepo;
 import com.example.demo.repo.NguyenLieuRepo;
 import com.example.demo.repo.NhaCungCapRepo;
@@ -86,15 +87,9 @@ public class ChiTietDonHangController {
 
     @GetMapping(value = "/hoaDon")
     public String hoaDon(Model model){
-        List<ChiTietDonHang> chiTietDonHangList = chiTietDonHangRepo.listCTĐHStatus();
-        List<ChitietDonHangResponse> chitietDonHangResponseList = new ArrayList<>();
-        for (ChiTietDonHang chiTietDonHang:chiTietDonHangList){
-            ChitietDonHangResponse chitietDonHangResponse = new ChitietDonHangResponse();
-            chitietDonHangResponse.setMaNhaCungCap(chiTietDonHang.getMaDonHang());
-            chitietDonHangResponse.setTenNhaCungCap(nhaCungCapRepo.getOne(chiTietDonHang.getMaDonHang()).getTenNhaCungCap());
-            chitietDonHangResponseList.add(chitietDonHangResponse);
-        }
-        model.addAttribute("hoadon",chitietDonHangResponseList);
+        List<NhaCungCap> nhaCungCapList = nhaCungCapRepo.listNhaCungCapHoaDon();
+
+        model.addAttribute("hoadon",nhaCungCapList);
         return "hoaDon";
     }
 

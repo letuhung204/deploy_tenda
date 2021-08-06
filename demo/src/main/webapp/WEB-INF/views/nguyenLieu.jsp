@@ -37,9 +37,6 @@
             integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
             crossorigin="anonymous" />
     <!-- Custom style -->
-    <link href="../static/css/style.css"
-          rel="stylesheet" />
-    <script src="/js/checkValidate.js"></script>
     <style type="text/css">
         .asteriskField {
             color: red;
@@ -183,33 +180,36 @@
                                                     Số Lượng <span class="asteriskField"> *</span>
                                                 </label>
 
-                                                <form:input path="soLuong" id="soLuong" cssStyle="width: 50%"
+                                                <form:input path="soLuong" id="soLuong${s.index}" cssStyle="width: 50%"
                                                             class="form-control"
                                                              type="number" />
 
-                                                <button type="submit" class="btn btn-primary" style="margin-top: 10px" onclick="callApi()">Thêm Vào Giỏ</button>
-                                                <script>
-                                                    function callApi() {
-                                                        var soLuong = document.getElementById("soLuong").value;
+                                                <button class="btn btn-primary" style="margin-top: 10px" onclick="callApi${s.index}()">Thêm Vào Giỏ</button>
 
-                                                        if(soLuong != null){
-                                                            var finalUrl = "/save-draf-don-hang/${maNhaCungCap}/${nguyenLieu.id}"+"?soLuong="+soLuong;
-                                                            $.ajax({
-                                                                url: finalUrl,
-                                                                cache: false,
-                                                                success: function (html) {
-                                                                    // Parse the recieved data here.
-                                                                    console.log(html);
-                                                                    alert("thêm vào giỏ hàng thành công")
-                                                                }
-                                                            });
-                                                        }
-                                                    }
-                                                </script>
 <%--                                            </form:form>--%>
                                         </td>
                                     </tr>
+                                    <script>
+                                        function callApi${s.index}() {
+                                            var soLuong = document.getElementById("soLuong${s.index}").value;
+                                            console.log("test");
+                                            console.log(soLuong);
+                                            if(soLuong != null){
+                                                var finalUrl = "/save-draf-don-hang/${maNhaCungCap}/${nguyenLieu.id}"+"?soLuong="+soLuong;
+                                                $.ajax({
+                                                    url: finalUrl,
+                                                    cache: false,
+                                                    success: function (html) {
+                                                        // Parse the recieved data here.
+                                                        console.log(html);
+                                                        alert("thêm vào giỏ hàng thành công")
+                                                    }
+                                                });
+                                            }
+                                        }
+                                    </script>
                                 </c:forEach>
+
                                 </tbody>
                             </table>
 
