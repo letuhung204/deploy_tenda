@@ -22,6 +22,12 @@ public class NhaCungCapController {
     @Autowired
     private NguyenLieuRepo nguyenLieuRepo;
 
+    @GetMapping("/nhaCungCapJson")
+    @ResponseBody
+    public List<NhaCungCap> getListNhaCungCap(){
+        return nhaCungCapRepo.findAll();
+    }
+
     @GetMapping("/nhacungcap")
     public String nhaCungCap(Model model, @RequestParam(value = "tenNhaCungCap", required = false) String tenNhaCungCap) {
         List<NhaCungCap> nhaCungCapList = new ArrayList<>();

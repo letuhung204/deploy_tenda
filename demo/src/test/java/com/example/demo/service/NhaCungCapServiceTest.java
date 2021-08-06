@@ -8,11 +8,11 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class NhaCungCapServiceTest {
@@ -35,6 +35,6 @@ public class NhaCungCapServiceTest {
         nhaCungCapList.add(nhaCungCap);
         when(nhaCungCapRepo.findAll()).thenReturn(nhaCungCapList);
         assertEquals(1,nhaCungCapList.size());
-
+        assertEquals(nhaCungCapController.getListNhaCungCap(),nhaCungCapList);
     }
 }
